@@ -26,8 +26,15 @@ Vagrant.configure("2") do |config|
     r1.vm.provision "shell",
       run: "always",
       inline: <<-SHELL
-        # This is VM for HW 33 OSPF
-        # router1 provisioning placeholder
+
+        # отключение фаервола
+        sudo systemctl stop firewalld
+        sudo systemctl disable firewalld
+        sudo systemctl mask firewalld
+
+        # установка пакетов. Пакет vim не будет устанавливаться, так как для работы достаточно vi
+        sudo dnf install -y net-tools traceroute tcpdump
+
       SHELL
   end
 
@@ -51,8 +58,15 @@ Vagrant.configure("2") do |config|
     r2.vm.provision "shell",
       run: "always",
       inline: <<-SHELL
-        # This is VM for HW 33 OSPF
-        # router2 provisioning placeholder
+
+        # отключение фаервола
+        sudo systemctl stop firewalld
+        sudo systemctl disable firewalld
+        sudo systemctl mask firewalld
+
+        # установка пакетов
+        sudo dnf install -y net-tools traceroute tcpdump
+
       SHELL
   end
 
@@ -76,8 +90,15 @@ Vagrant.configure("2") do |config|
     r3.vm.provision "shell",
       run: "always",
       inline: <<-SHELL
-        # This is VM for HW 33 OSPF
-        # router3 provisioning placeholder
+
+        # отключение фаервола
+        sudo systemctl stop firewalld
+        sudo systemctl disable firewalld
+        sudo systemctl mask firewalld
+
+        # установка пакетов
+        sudo dnf install -y net-tools traceroute tcpdump
+
       SHELL
   end
 
