@@ -34,6 +34,13 @@ Vagrant.configure("2") do |config|
         # установка пакетов. Пакет vim не будет устанавливаться, так как для работы достаточно vi
         sudo dnf install -y net-tools traceroute tcpdump frr
 
+        # включаем маршрутизацию транзитных пакетов
+        sudo sysctl -w net.ipv4.conf.all.forwarding=1
+        grep -q "net.ipv4.conf.all.forwarding" /etc/sysctl.conf || echo "net.ipv4.conf.all.forwarding = 1" | sudo tee -a /etc/sysctl.conf
+
+        # включаем ospfd в демонах FRR
+        sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
+
       SHELL
   end
 
@@ -65,6 +72,13 @@ Vagrant.configure("2") do |config|
         # установка пакетов
         sudo dnf install -y net-tools traceroute tcpdump frr
 
+        # включаем маршрутизацию транзитных пакетов
+        sudo sysctl -w net.ipv4.conf.all.forwarding=1
+        grep -q "net.ipv4.conf.all.forwarding" /etc/sysctl.conf || echo "net.ipv4.conf.all.forwarding = 1" | sudo tee -a /etc/sysctl.conf
+
+        # включаем ospfd в демонах FRR
+        sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
+
       SHELL
   end
 
@@ -95,6 +109,13 @@ Vagrant.configure("2") do |config|
 
         # установка пакетов
         sudo dnf install -y net-tools traceroute tcpdump frr
+
+        # включаем маршрутизацию транзитных пакетов
+        sudo sysctl -w net.ipv4.conf.all.forwarding=1
+        grep -q "net.ipv4.conf.all.forwarding" /etc/sysctl.conf || echo "net.ipv4.conf.all.forwarding = 1" | sudo tee -a /etc/sysctl.conf
+
+        # включаем ospfd в демонах FRR
+        sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
 
       SHELL
   end
