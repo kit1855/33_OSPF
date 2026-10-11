@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов. Пакет vim не будет устанавливаться, так как для работы достаточно vi
-        sudo dnf install -y net-tools traceroute tcpdump
+        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
 
       SHELL
   end
@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов
-        sudo dnf install -y net-tools traceroute tcpdump
+        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
 
       SHELL
   end
@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов
-        sudo dnf install -y net-tools traceroute tcpdump
+        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
 
       SHELL
   end
