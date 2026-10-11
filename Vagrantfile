@@ -41,6 +41,17 @@ Vagrant.configure("2") do |config|
         # включаем ospfd в демонах FRR
         sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
 
+        # запускаем FRR и включаем в автозагрузку
+        sudo systemctl enable --now frr
+
+sudo vtysh -c "configure terminal" \
+  -c "router ospf" \
+  -c "ospf router-id 1.1.1.1" \
+  -c "network 10.0.10.0/30 area 0" \
+  -c "network 10.0.12.0/30 area 0" \
+  -c "network 192.168.10.0/24 area 0"
+sudo vtysh -c "write memory"
+
       SHELL
   end
 
@@ -79,6 +90,17 @@ Vagrant.configure("2") do |config|
         # включаем ospfd в демонах FRR
         sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
 
+        # запускаем FRR и включаем в автозагрузку
+        sudo systemctl enable --now frr
+
+sudo vtysh -c "configure terminal" \
+  -c "router ospf" \
+  -c "ospf router-id 2.2.2.2" \
+  -c "network 10.0.10.0/30 area 0" \
+  -c "network 10.0.11.0/30 area 0" \
+  -c "network 192.168.20.0/24 area 0"
+sudo vtysh -c "write memory"
+
       SHELL
   end
 
@@ -116,6 +138,17 @@ Vagrant.configure("2") do |config|
 
         # включаем ospfd в демонах FRR
         sudo sed -i 's/^ospfd=no/ospfd=yes/' /etc/frr/daemons
+
+        # запускаем FRR и включаем в автозагрузку
+        sudo systemctl enable --now frr
+
+sudo vtysh -c "configure terminal" \
+  -c "router ospf" \
+  -c "ospf router-id 3.3.3.3" \
+  -c "network 10.0.11.0/30 area 0" \
+  -c "network 10.0.12.0/30 area 0" \
+  -c "network 192.168.30.0/24 area 0"
+sudo vtysh -c "write memory"
 
       SHELL
   end
