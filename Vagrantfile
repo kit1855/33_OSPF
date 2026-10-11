@@ -17,7 +17,6 @@ Vagrant.configure("2") do |config|
       v.cpus = 2
     end
 
-    # Интерфейс для SSH с хоста
     r1.vm.network "private_network", ip: "192.168.50.10", adapter: 2, netmask: "255.255.255.0"
     r1.vm.network "private_network", ip: "10.0.10.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r1"
     r1.vm.network "private_network", ip: "10.0.12.1", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r3"
@@ -33,7 +32,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов. Пакет vim не будет устанавливаться, так как для работы достаточно vi
-        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
+        sudo dnf install -y net-tools traceroute tcpdump frr
 
       SHELL
   end
@@ -49,7 +48,6 @@ Vagrant.configure("2") do |config|
       v.cpus = 2
     end
 
-    # Интерфейс для SSH с хоста
     r2.vm.network "private_network", ip: "192.168.51.10", adapter: 2, netmask: "255.255.255.0"
     r2.vm.network "private_network", ip: "10.0.10.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r1"
     r2.vm.network "private_network", ip: "10.0.11.2", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r2"
@@ -65,7 +63,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов
-        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
+        sudo dnf install -y net-tools traceroute tcpdump frr
 
       SHELL
   end
@@ -81,7 +79,6 @@ Vagrant.configure("2") do |config|
       v.cpus = 2
     end
 
-    # Интерфейс для SSH с хоста
     r3.vm.network "private_network", ip: "192.168.52.10", adapter: 2, netmask: "255.255.255.0"
     r3.vm.network "private_network", ip: "10.0.11.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r2"
     r3.vm.network "private_network", ip: "10.0.12.2", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r3"
@@ -97,7 +94,7 @@ Vagrant.configure("2") do |config|
         sudo systemctl mask firewalld
 
         # установка пакетов
-        sudo dnf install -y net-tools traceroute tcpdump frr frr-pythontools
+        sudo dnf install -y net-tools traceroute tcpdump frr
 
       SHELL
   end
