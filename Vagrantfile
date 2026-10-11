@@ -19,6 +19,9 @@ Vagrant.configure("2") do |config|
 
     # Интерфейс для SSH с хоста
     r1.vm.network "private_network", ip: "192.168.50.10", adapter: 2, netmask: "255.255.255.0"
+    r1.vm.network "private_network", ip: "10.0.10.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r1"
+    r1.vm.network "private_network", ip: "10.0.12.1", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r3"
+    r1.vm.network "private_network", ip: "192.168.10.1", adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "net1"
 
     r1.vm.provision "shell",
       run: "always",
@@ -41,6 +44,9 @@ Vagrant.configure("2") do |config|
 
     # Интерфейс для SSH с хоста
     r2.vm.network "private_network", ip: "192.168.51.10", adapter: 2, netmask: "255.255.255.0"
+    r2.vm.network "private_network", ip: "10.0.10.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r1"
+    r2.vm.network "private_network", ip: "10.0.11.2", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r2"
+    r2.vm.network "private_network", ip: "192.168.20.1", adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "net2"
 
     r2.vm.provision "shell",
       run: "always",
@@ -63,6 +69,9 @@ Vagrant.configure("2") do |config|
 
     # Интерфейс для SSH с хоста
     r3.vm.network "private_network", ip: "192.168.52.10", adapter: 2, netmask: "255.255.255.0"
+    r3.vm.network "private_network", ip: "10.0.11.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r2"
+    r3.vm.network "private_network", ip: "10.0.12.2", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "r3"
+    r3.vm.network "private_network", ip: "192.168.30.1", adapter: 5, netmask: "255.255.255.0", virtualbox__intnet: "net3"
 
     r3.vm.provision "shell",
       run: "always",
