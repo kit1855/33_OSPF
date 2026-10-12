@@ -1,0 +1,837 @@
+# запуск ВМ
+
+PS D:\linux\Professional\33 Статическая и динамическая маршрутизация, OSPF\dz2> vagrant up
+Bringing machine 'router1' up with 'virtualbox' provider...
+Bringing machine 'router2' up with 'virtualbox' provider...
+Bringing machine 'router3' up with 'virtualbox' provider...
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: Importing base box 'almalinux/9'...
+==> router1: Matching MAC address for NAT networking...
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router1: This is very often used by the router and can cause the
+==> router1: network to not work properly. If the network doesn't work
+==> router1: properly, try changing this IP.
+==> router1: Checking if box 'almalinux/9' version '1.0.0' is up to date...
+==> router1: Setting the name of the VM: dz2_router1_1791748584916_5640
+==> router1: Clearing any previously set network interfaces...
+==> router1: Preparing network interfaces based on configuration...
+    router1: Adapter 1: nat
+    router1: Adapter 2: hostonly
+    router1: Adapter 3: intnet
+    router1: Adapter 4: intnet
+    router1: Adapter 5: intnet
+==> router1: Forwarding ports...
+    router1: 22 (guest) => 2222 (host) (adapter 1)
+==> router1: Running 'pre-boot' VM customizations...
+==> router1: Booting VM...
+==> router1: Waiting for machine to boot. This may take a few minutes...
+    router1: SSH address: 127.0.0.1:2222
+    router1: SSH username: vagrant
+    router1: SSH auth method: private key
+    router1:
+    router1: Vagrant insecure key detected. Vagrant will automatically replace
+    router1: this with a newly generated keypair for better security.
+    router1:
+    router1: Inserting generated public key within guest...
+==> router1: Machine booted and ready!
+==> router1: Checking for guest additions in VM...
+==> router1: Setting hostname...
+==> router1: Configuring and enabling network interfaces...
+==> router1: Mounting shared folders...
+    router1: D:/linux/Professional/33 Статическая и динамическая маршрутизация, OSPF/dz2 => /vagrant
+==> router1: Running provisioner: shell...
+    router1: Running: inline script
+    router1: Failed to stop firewalld.service: Unit firewalld.service not loaded.
+    router1: Failed to disable unit: Unit file firewalld.service does not exist.
+    router1: Unit firewalld.service does not exist, proceeding anyway.
+    router1: Created symlink /etc/systemd/system/firewalld.service → /dev/null.
+    router1: AlmaLinux 9 - AppStream                         1.2 MB/s |  29 MB     00:23
+    router1: AlmaLinux 9 - BaseOS                            1.2 MB/s |  45 MB     00:37
+    router1: AlmaLinux 9 - Extras                             62 kB/s |  33 kB     00:00
+    router1: Package tcpdump-14:4.99.0-9.el9.x86_64 is already installed.
+    router1: Dependencies resolved.
+    router1: ================================================================================
+    router1:  Package                      Arch   Version                    Repo       Size
+    router1: ================================================================================
+    router1: Installing:
+    router1:  frr                          x86_64 8.5.3-15.el9_8.1           appstream 4.8 M
+    router1:  net-tools                    x86_64 2.0-0.64.20160912git.el9   baseos    294 k
+    router1:  traceroute                   x86_64 3:2.1.1-1.el9              baseos     56 k
+    router1: Upgrading:
+    router1:  audit                        x86_64 3.1.5-8.el9                baseos    253 k
+    router1:  audit-libs                   x86_64 3.1.5-8.el9                baseos    121 k
+    router1:  libselinux                   x86_64 3.6-3.el9                  baseos     85 k
+    router1:  libselinux-utils             x86_64 3.6-3.el9                  baseos    164 k
+    router1:  libsemanage                  x86_64 3.6-5.el9_6                baseos    117 k
+    router1:  policycoreutils              x86_64 3.6-5.el9                  baseos    205 k
+    router1:  python3-libselinux           x86_64 3.6-3.el9                  appstream 186 k
+    router1:  selinux-policy               noarch 38.1.75-2.el9_8.1          baseos     34 k
+    router1:  selinux-policy-targeted      noarch 38.1.75-2.el9_8.1          baseos    6.5 M
+    router1: Installing dependencies:
+    router1:  checkpolicy                  x86_64 3.6-1.el9                  appstream 351 k
+    router1:  frr-selinux                  noarch 8.5.3-15.el9_8.1           appstream  24 k
+    router1:  info                         x86_64 6.7-15.el9                 baseos    224 k
+    router1:  libyang                      x86_64 2.1.148-1.el9_8.1          appstream 539 k
+    router1:  lm_sensors-libs              x86_64 3.6.0-10.el9               appstream  41 k
+    router1:  mariadb-connector-c          x86_64 3.2.6-2.el9_8              appstream 193 k
+    router1:  mariadb-connector-c-config   noarch 3.2.6-2.el9_8              appstream 7.6 k
+    router1:  net-snmp                     x86_64 1:5.9.1-21.el9             appstream 294 k
+    router1:  net-snmp-agent-libs          x86_64 1:5.9.1-21.el9             appstream 692 k
+    router1:  net-snmp-libs                x86_64 1:5.9.1-21.el9             appstream 740 k
+    router1:  policycoreutils-python-utils noarch 3.6-5.el9                  appstream  69 k
+    router1:  python3-audit                x86_64 3.1.5-8.el9                appstream  82 k
+    router1:  python3-distro               noarch 1.5.0-7.el9                appstream  36 k
+    router1:  python3-libsemanage          x86_64 3.6-5.el9_6                appstream  78 k
+    router1:  python3-policycoreutils      noarch 3.6-5.el9                  appstream 2.0 M
+    router1:  python3-setools              x86_64 4.4.4-1.el9                baseos    551 k
+    router1:  python3-setuptools           noarch 53.0.0-15.el9              baseos    831 k
+    router1:
+    router1: Transaction Summary
+    router1: ================================================================================
+    router1: Install  20 Packages
+    router1: Upgrade   9 Packages
+    router1:
+    router1: Total download size: 19 M
+    router1: Downloading Packages:
+    router1: (1/29): frr-selinux-8.5.3-15.el9_8.1.noarch.rpm 541 kB/s |  24 kB     00:00
+    router1: (2/29): checkpolicy-3.6-1.el9.x86_64.rpm        4.1 MB/s | 351 kB     00:00
+    router1: (3/29): lm_sensors-libs-3.6.0-10.el9.x86_64.rpm 1.7 MB/s |  41 kB     00:00
+    router1: (4/29): mariadb-connector-c-3.2.6-2.el9_8.x86_6 512 kB/s | 193 kB     00:00
+    router1: (5/29): mariadb-connector-c-config-3.2.6-2.el9_ 955 kB/s | 7.6 kB     00:00
+    router1: (6/29): net-snmp-5.9.1-21.el9.x86_64.rpm        1.0 MB/s | 294 kB     00:00
+    router1: (7/29): libyang-2.1.148-1.el9_8.1.x86_64.rpm    585 kB/s | 539 kB     00:00
+    router1: (8/29): net-snmp-libs-5.9.1-21.el9.x86_64.rpm   744 kB/s | 740 kB     00:00
+    router1: (9/29): policycoreutils-python-utils-3.6-5.el9. 985 kB/s |  69 kB     00:00
+    router1: (10/29): python3-audit-3.1.5-8.el9.x86_64.rpm   1.5 MB/s |  82 kB     00:00
+    router1: (11/29): python3-distro-1.5.0-7.el9.noarch.rpm  947 kB/s |  36 kB     00:00
+    router1: (12/29): python3-libsemanage-3.6-5.el9_6.x86_64 687 kB/s |  78 kB     00:00
+    router1: (13/29): net-snmp-agent-libs-5.9.1-21.el9.x86_6 342 kB/s | 692 kB     00:02
+    router1: (14/29): info-6.7-15.el9.x86_64.rpm             699 kB/s | 224 kB     00:00
+    router1: (15/29): net-tools-2.0-0.64.20160912git.el9.x86 747 kB/s | 294 kB     00:00
+    router1: (16/29): python3-setools-4.4.4-1.el9.x86_64.rpm 439 kB/s | 551 kB     00:01
+    router1: (17/29): python3-setuptools-53.0.0-15.el9.noarc 503 kB/s | 831 kB     00:01
+    router1: (18/29): traceroute-2.1.1-1.el9.x86_64.rpm       77 kB/s |  56 kB     00:00
+    router1: (19/29): python3-libselinux-3.6-3.el9.x86_64.rp 2.7 MB/s | 186 kB     00:00
+    router1: (20/29): audit-3.1.5-8.el9.x86_64.rpm           822 kB/s | 253 kB     00:00
+    router1: (21/29): audit-libs-3.1.5-8.el9.x86_64.rpm      479 kB/s | 121 kB     00:00
+    router1: (22/29): libselinux-3.6-3.el9.x86_64.rpm        305 kB/s |  85 kB     00:00
+    router1: (23/29): libselinux-utils-3.6-3.el9.x86_64.rpm  1.1 MB/s | 164 kB     00:00
+    router1: (24/29): libsemanage-3.6-5.el9_6.x86_64.rpm     940 kB/s | 117 kB     00:00
+    router1: (25/29): policycoreutils-3.6-5.el9.x86_64.rpm   1.2 MB/s | 205 kB     00:00
+    router1: (26/29): selinux-policy-38.1.75-2.el9_8.1.noarc 1.4 MB/s |  34 kB     00:00
+    router1: (27/29): python3-policycoreutils-3.6-5.el9.noar 327 kB/s | 2.0 MB     00:06
+    router1: (28/29): frr-8.5.3-15.el9_8.1.x86_64.rpm        387 kB/s | 4.8 MB     00:12
+    router1: (29/29): selinux-policy-targeted-38.1.75-2.el9_ 944 kB/s | 6.5 MB     00:07
+    router1: --------------------------------------------------------------------------------
+    router1: Total                                           1.2 MB/s |  19 MB     00:16
+    router1: Running transaction check
+    router1: Transaction check succeeded.
+    router1: Running transaction test
+    router1: Transaction test succeeded.
+    router1: Running transaction
+    router1:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch       1/1
+    router1:   Preparing        :                                                        1/1
+    router1:   Upgrading        : libselinux-3.6-3.el9.x86_64                           1/38
+    router1:   Running scriptlet: libselinux-3.6-3.el9.x86_64                           1/38
+    router1:   Upgrading        : audit-libs-3.1.5-8.el9.x86_64                         2/38
+    router1:   Installing       : net-snmp-libs-1:5.9.1-21.el9.x86_64                   3/38
+    router1:   Upgrading        : libsemanage-3.6-5.el9_6.x86_64                        4/38
+    router1:   Upgrading        : python3-libselinux-3.6-3.el9.x86_64                   5/38
+    router1:   Upgrading        : libselinux-utils-3.6-3.el9.x86_64                     6/38
+    router1:   Upgrading        : policycoreutils-3.6-5.el9.x86_64                      7/38
+    router1:   Running scriptlet: policycoreutils-3.6-5.el9.x86_64                      7/38
+    router1:   Upgrading        : selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router1:   Running scriptlet: selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router1:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router1:   Upgrading        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router1:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router1:   Installing       : python3-setuptools-53.0.0-15.el9.noarch              10/38
+    router1:   Installing       : python3-distro-1.5.0-7.el9.noarch                    11/38
+    router1:   Installing       : python3-setools-4.4.4-1.el9.x86_64                   12/38
+    router1:   Installing       : python3-libsemanage-3.6-5.el9_6.x86_64               13/38
+    router1:   Installing       : python3-audit-3.1.5-8.el9.x86_64                     14/38
+    router1:   Installing       : info-6.7-15.el9.x86_64                               15/38
+    router1:   Installing       : mariadb-connector-c-config-3.2.6-2.el9_8.noarch      16/38
+    router1:   Installing       : mariadb-connector-c-3.2.6-2.el9_8.x86_64             17/38
+    router1:   Installing       : lm_sensors-libs-3.6.0-10.el9.x86_64                  18/38
+    router1:   Installing       : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64            19/38
+    router1:   Installing       : net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router1:   Running scriptlet: net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router1:   Installing       : libyang-2.1.148-1.el9_8.1.x86_64                     21/38
+    router1:   Installing       : checkpolicy-3.6-1.el9.x86_64                         22/38
+    router1:   Installing       : python3-policycoreutils-3.6-5.el9.noarch             23/38
+    router1:   Installing       : policycoreutils-python-utils-3.6-5.el9.noarch        24/38
+    router1:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router1:   Installing       : frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router1:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router1:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router1:   Installing       : frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router1:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router1:   Upgrading        : audit-3.1.5-8.el9.x86_64                             27/38
+    router1:   Running scriptlet: audit-3.1.5-8.el9.x86_64                             27/38
+    router1: Warning: The unit file, source configuration file or drop-ins of auditd.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+    router1:
+    router1:   Installing       : net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router1:   Running scriptlet: net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router1:   Installing       : traceroute-3:2.1.1-1.el9.x86_64                      29/38
+    router1:   Cleanup          : python3-libselinux-3.6-1.el9.x86_64                  30/38
+    router1:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router1:   Cleanup          : selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router1:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router1:   Running scriptlet: audit-3.1.5-1.el9.x86_64                             32/38
+    router1:   Cleanup          : audit-3.1.5-1.el9.x86_64                             32/38
+    router1:   Cleanup          : selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router1:   Running scriptlet: selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router1:   Running scriptlet: policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router1:   Cleanup          : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router1:   Cleanup          : libsemanage-3.6-1.el9.x86_64                         35/38
+    router1:   Cleanup          : libselinux-utils-3.6-1.el9.x86_64                    36/38
+    router1:   Cleanup          : libselinux-3.6-1.el9.x86_64                          37/38
+    router1:   Cleanup          : audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router1:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     38/38
+    router1:   Running scriptlet: audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router1:   Verifying        : checkpolicy-3.6-1.el9.x86_64                          1/38
+    router1:   Verifying        : frr-8.5.3-15.el9_8.1.x86_64                           2/38
+    router1:   Verifying        : frr-selinux-8.5.3-15.el9_8.1.noarch                   3/38
+    router1:   Verifying        : libyang-2.1.148-1.el9_8.1.x86_64                      4/38
+    router1:   Verifying        : lm_sensors-libs-3.6.0-10.el9.x86_64                   5/38
+    router1:   Verifying        : mariadb-connector-c-3.2.6-2.el9_8.x86_64              6/38
+    router1:   Verifying        : mariadb-connector-c-config-3.2.6-2.el9_8.noarch       7/38
+    router1:   Verifying        : net-snmp-1:5.9.1-21.el9.x86_64                        8/38
+    router1:   Verifying        : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64             9/38
+    router1:   Verifying        : net-snmp-libs-1:5.9.1-21.el9.x86_64                  10/38
+    router1:   Verifying        : policycoreutils-python-utils-3.6-5.el9.noarch        11/38
+    router1:   Verifying        : python3-audit-3.1.5-8.el9.x86_64                     12/38
+    router1:   Verifying        : python3-distro-1.5.0-7.el9.noarch                    13/38
+    router1:   Verifying        : python3-libsemanage-3.6-5.el9_6.x86_64               14/38
+    router1:   Verifying        : python3-policycoreutils-3.6-5.el9.noarch             15/38
+    router1:   Verifying        : info-6.7-15.el9.x86_64                               16/38
+    router1:   Verifying        : net-tools-2.0-0.64.20160912git.el9.x86_64            17/38
+    router1:   Verifying        : python3-setools-4.4.4-1.el9.x86_64                   18/38
+    router1:   Verifying        : python3-setuptools-53.0.0-15.el9.noarch              19/38
+    router1:   Verifying        : traceroute-3:2.1.1-1.el9.x86_64                      20/38
+    router1:   Verifying        : python3-libselinux-3.6-3.el9.x86_64                  21/38
+    router1:   Verifying        : python3-libselinux-3.6-1.el9.x86_64                  22/38
+    router1:   Verifying        : audit-3.1.5-8.el9.x86_64                             23/38
+    router1:   Verifying        : audit-3.1.5-1.el9.x86_64                             24/38
+    router1:   Verifying        : audit-libs-3.1.5-8.el9.x86_64                        25/38
+    router1:   Verifying        : audit-libs-3.1.5-1.el9.x86_64                        26/38
+    router1:   Verifying        : libselinux-3.6-3.el9.x86_64                          27/38
+    router1:   Verifying        : libselinux-3.6-1.el9.x86_64                          28/38
+    router1:   Verifying        : libselinux-utils-3.6-3.el9.x86_64                    29/38
+    router1:   Verifying        : libselinux-utils-3.6-1.el9.x86_64                    30/38
+    router1:   Verifying        : libsemanage-3.6-5.el9_6.x86_64                       31/38
+    router1:   Verifying        : libsemanage-3.6-1.el9.x86_64                         32/38
+    router1:   Verifying        : policycoreutils-3.6-5.el9.x86_64                     33/38
+    router1:   Verifying        : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router1:   Verifying        : selinux-policy-38.1.75-2.el9_8.1.noarch              35/38
+    router1:   Verifying        : selinux-policy-38.1.45-3.el9_5.noarch                36/38
+    router1:   Verifying        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     37/38
+    router1:   Verifying        : selinux-policy-targeted-38.1.45-3.el9_5.noarch       38/38
+    router1:
+    router1: Upgraded:
+    router1:   audit-3.1.5-8.el9.x86_64
+    router1:   audit-libs-3.1.5-8.el9.x86_64
+    router1:   libselinux-3.6-3.el9.x86_64
+    router1:   libselinux-utils-3.6-3.el9.x86_64
+    router1:   libsemanage-3.6-5.el9_6.x86_64
+    router1:   policycoreutils-3.6-5.el9.x86_64
+    router1:   python3-libselinux-3.6-3.el9.x86_64
+    router1:   selinux-policy-38.1.75-2.el9_8.1.noarch
+    router1:   selinux-policy-targeted-38.1.75-2.el9_8.1.noarch
+    router1: Installed:
+    router1:   checkpolicy-3.6-1.el9.x86_64
+    router1:   frr-8.5.3-15.el9_8.1.x86_64
+    router1:   frr-selinux-8.5.3-15.el9_8.1.noarch
+    router1:   info-6.7-15.el9.x86_64
+    router1:   libyang-2.1.148-1.el9_8.1.x86_64
+    router1:   lm_sensors-libs-3.6.0-10.el9.x86_64
+    router1:   mariadb-connector-c-3.2.6-2.el9_8.x86_64
+    router1:   mariadb-connector-c-config-3.2.6-2.el9_8.noarch
+    router1:   net-snmp-1:5.9.1-21.el9.x86_64
+    router1:   net-snmp-agent-libs-1:5.9.1-21.el9.x86_64
+    router1:   net-snmp-libs-1:5.9.1-21.el9.x86_64
+    router1:   net-tools-2.0-0.64.20160912git.el9.x86_64
+    router1:   policycoreutils-python-utils-3.6-5.el9.noarch
+    router1:   python3-audit-3.1.5-8.el9.x86_64
+    router1:   python3-distro-1.5.0-7.el9.noarch
+    router1:   python3-libsemanage-3.6-5.el9_6.x86_64
+    router1:   python3-policycoreutils-3.6-5.el9.noarch
+    router1:   python3-setools-4.4.4-1.el9.x86_64
+    router1:   python3-setuptools-53.0.0-15.el9.noarch
+    router1:   traceroute-3:2.1.1-1.el9.x86_64
+    router1:
+    router1: Complete!
+    router1: net.ipv4.conf.all.forwarding = 1
+    router1: net.ipv4.conf.all.forwarding = 1
+    router1: Created symlink /etc/systemd/system/multi-user.target.wants/frr.service → /usr/lib/systemd/system/frr.service.
+    router1: Note: this version of vtysh never writes vtysh.conf
+    router1: Building Configuration...
+    router1: Integrated configuration saved to /etc/frr/frr.conf
+    router1: [OK]
+==> router2: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router2: This is very often used by the router and can cause the
+==> router2: network to not work properly. If the network doesn't work
+==> router2: properly, try changing this IP.
+==> router2: Importing base box 'almalinux/9'...
+==> router2: Matching MAC address for NAT networking...
+==> router2: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router2: This is very often used by the router and can cause the
+==> router2: network to not work properly. If the network doesn't work
+==> router2: properly, try changing this IP.
+==> router2: Checking if box 'almalinux/9' version '1.0.0' is up to date...
+==> router2: Setting the name of the VM: dz2_router2_1791748773559_11775
+==> router2: Fixed port collision for 22 => 2222. Now on port 2200.
+==> router2: Clearing any previously set network interfaces...
+==> router2: Preparing network interfaces based on configuration...
+    router2: Adapter 1: nat
+    router2: Adapter 2: hostonly
+    router2: Adapter 3: intnet
+    router2: Adapter 4: intnet
+    router2: Adapter 5: intnet
+==> router2: Forwarding ports...
+    router2: 22 (guest) => 2200 (host) (adapter 1)
+==> router2: Running 'pre-boot' VM customizations...
+==> router2: Booting VM...
+==> router2: Waiting for machine to boot. This may take a few minutes...
+    router2: SSH address: 127.0.0.1:2200
+    router2: SSH username: vagrant
+    router2: SSH auth method: private key
+    router2:
+    router2: Vagrant insecure key detected. Vagrant will automatically replace
+    router2: this with a newly generated keypair for better security.
+    router2:
+    router2: Inserting generated public key within guest...
+==> router2: Machine booted and ready!
+==> router2: Checking for guest additions in VM...
+==> router2: Setting hostname...
+==> router2: Configuring and enabling network interfaces...
+==> router2: Mounting shared folders...
+    router2: D:/linux/Professional/33 Статическая и динамическая маршрутизация, OSPF/dz2 => /vagrant
+==> router2: Running provisioner: shell...
+    router2: Running: inline script
+    router2: Failed to stop firewalld.service: Unit firewalld.service not loaded.
+    router2: Failed to disable unit: Unit file firewalld.service does not exist.
+    router2: Unit firewalld.service does not exist, proceeding anyway.
+    router2: Created symlink /etc/systemd/system/firewalld.service → /dev/null.
+    router2: AlmaLinux 9 - AppStream                         1.2 MB/s |  29 MB     00:24
+    router2: AlmaLinux 9 - BaseOS                            1.2 MB/s |  45 MB     00:37
+    router2: AlmaLinux 9 - Extras                             70 kB/s |  33 kB     00:00
+    router2: Package tcpdump-14:4.99.0-9.el9.x86_64 is already installed.
+    router2: Dependencies resolved.
+    router2: ================================================================================
+    router2:  Package                      Arch   Version                    Repo       Size
+    router2: ================================================================================
+    router2: Installing:
+    router2:  frr                          x86_64 8.5.3-15.el9_8.1           appstream 4.8 M
+    router2:  net-tools                    x86_64 2.0-0.64.20160912git.el9   baseos    294 k
+    router2:  traceroute                   x86_64 3:2.1.1-1.el9              baseos     56 k
+    router2: Upgrading:
+    router2:  audit                        x86_64 3.1.5-8.el9                baseos    253 k
+    router2:  audit-libs                   x86_64 3.1.5-8.el9                baseos    121 k
+    router2:  libselinux                   x86_64 3.6-3.el9                  baseos     85 k
+    router2:  libselinux-utils             x86_64 3.6-3.el9                  baseos    164 k
+    router2:  libsemanage                  x86_64 3.6-5.el9_6                baseos    117 k
+    router2:  policycoreutils              x86_64 3.6-5.el9                  baseos    205 k
+    router2:  python3-libselinux           x86_64 3.6-3.el9                  appstream 186 k
+    router2:  selinux-policy               noarch 38.1.75-2.el9_8.1          baseos     34 k
+    router2:  selinux-policy-targeted      noarch 38.1.75-2.el9_8.1          baseos    6.5 M
+    router2: Installing dependencies:
+    router2:  checkpolicy                  x86_64 3.6-1.el9                  appstream 351 k
+    router2:  frr-selinux                  noarch 8.5.3-15.el9_8.1           appstream  24 k
+    router2:  info                         x86_64 6.7-15.el9                 baseos    224 k
+    router2:  libyang                      x86_64 2.1.148-1.el9_8.1          appstream 539 k
+    router2:  lm_sensors-libs              x86_64 3.6.0-10.el9               appstream  41 k
+    router2:  mariadb-connector-c          x86_64 3.2.6-2.el9_8              appstream 193 k
+    router2:  mariadb-connector-c-config   noarch 3.2.6-2.el9_8              appstream 7.6 k
+    router2:  net-snmp                     x86_64 1:5.9.1-21.el9             appstream 294 k
+    router2:  net-snmp-agent-libs          x86_64 1:5.9.1-21.el9             appstream 692 k
+    router2:  net-snmp-libs                x86_64 1:5.9.1-21.el9             appstream 740 k
+    router2:  policycoreutils-python-utils noarch 3.6-5.el9                  appstream  69 k
+    router2:  python3-audit                x86_64 3.1.5-8.el9                appstream  82 k
+    router2:  python3-distro               noarch 1.5.0-7.el9                appstream  36 k
+    router2:  python3-libsemanage          x86_64 3.6-5.el9_6                appstream  78 k
+    router2:  python3-policycoreutils      noarch 3.6-5.el9                  appstream 2.0 M
+    router2:  python3-setools              x86_64 4.4.4-1.el9                baseos    551 k
+    router2:  python3-setuptools           noarch 53.0.0-15.el9              baseos    831 k
+    router2:
+    router2: Transaction Summary
+    router2: ================================================================================
+    router2: Install  20 Packages
+    router2: Upgrade   9 Packages
+    router2:
+    router2: Total download size: 19 M
+    router2: Downloading Packages:
+    router2: (1/29): frr-selinux-8.5.3-15.el9_8.1.noarch.rpm 935 kB/s |  24 kB     00:00
+    router2: (2/29): checkpolicy-3.6-1.el9.x86_64.rpm        3.2 MB/s | 351 kB     00:00
+    router2: (3/29): lm_sensors-libs-3.6.0-10.el9.x86_64.rpm 635 kB/s |  41 kB     00:00
+    router2: (4/29): mariadb-connector-c-3.2.6-2.el9_8.x86_6 380 kB/s | 193 kB     00:00
+    router2: (5/29): mariadb-connector-c-config-3.2.6-2.el9_ 1.1 MB/s | 7.6 kB     00:00
+    router2: (6/29): libyang-2.1.148-1.el9_8.1.x86_64.rpm    493 kB/s | 539 kB     00:01
+    router2: (7/29): net-snmp-5.9.1-21.el9.x86_64.rpm        523 kB/s | 294 kB     00:00
+    router2: (8/29): net-snmp-agent-libs-5.9.1-21.el9.x86_64 736 kB/s | 692 kB     00:00
+    router2: (9/29): policycoreutils-python-utils-3.6-5.el9. 222 kB/s |  69 kB     00:00
+    router2: (10/29): python3-audit-3.1.5-8.el9.x86_64.rpm   273 kB/s |  82 kB     00:00
+    router2: (11/29): python3-distro-1.5.0-7.el9.noarch.rpm  927 kB/s |  36 kB     00:00
+    router2: (12/29): python3-libsemanage-3.6-5.el9_6.x86_64 282 kB/s |  78 kB     00:00
+    router2: (13/29): net-snmp-libs-5.9.1-21.el9.x86_64.rpm  226 kB/s | 740 kB     00:03
+    router2: (14/29): info-6.7-15.el9.x86_64.rpm             684 kB/s | 224 kB     00:00
+    router2: (15/29): net-tools-2.0-0.64.20160912git.el9.x86 1.0 MB/s | 294 kB     00:00
+    router2: (16/29): python3-setools-4.4.4-1.el9.x86_64.rpm 314 kB/s | 551 kB     00:01
+    router2: (17/29): python3-setuptools-53.0.0-15.el9.noarc 531 kB/s | 831 kB     00:01
+    router2: (18/29): traceroute-2.1.1-1.el9.x86_64.rpm      2.1 MB/s |  56 kB     00:00
+    router2: (19/29): frr-8.5.3-15.el9_8.1.x86_64.rpm        557 kB/s | 4.8 MB     00:08
+    router2: (20/29): python3-libselinux-3.6-3.el9.x86_64.rp 414 kB/s | 186 kB     00:00
+    router2: (21/29): audit-3.1.5-8.el9.x86_64.rpm           632 kB/s | 253 kB     00:00
+    router2: (22/29): audit-libs-3.1.5-8.el9.x86_64.rpm      387 kB/s | 121 kB     00:00
+    router2: (23/29): libselinux-3.6-3.el9.x86_64.rpm        689 kB/s |  85 kB     00:00
+    router2: (24/29): libselinux-utils-3.6-3.el9.x86_64.rpm  419 kB/s | 164 kB     00:00
+    router2: (25/29): libsemanage-3.6-5.el9_6.x86_64.rpm     315 kB/s | 117 kB     00:00
+    router2: (26/29): selinux-policy-38.1.75-2.el9_8.1.noarc 550 kB/s |  34 kB     00:00
+    router2: (27/29): policycoreutils-3.6-5.el9.x86_64.rpm   596 kB/s | 205 kB     00:00
+    router2: (28/29): python3-policycoreutils-3.6-5.el9.noar 288 kB/s | 2.0 MB     00:07
+    router2: (29/29): selinux-policy-targeted-38.1.75-2.el9_ 1.1 MB/s | 6.5 MB     00:05
+    router2: --------------------------------------------------------------------------------
+    router2: Total                                           1.2 MB/s |  19 MB     00:16
+    router2: Running transaction check
+    router2: Transaction check succeeded.
+    router2: Running transaction test
+    router2: Transaction test succeeded.
+    router2: Running transaction
+    router2:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch       1/1
+    router2:   Preparing        :                                                        1/1
+    router2:   Upgrading        : libselinux-3.6-3.el9.x86_64                           1/38
+    router2:   Running scriptlet: libselinux-3.6-3.el9.x86_64                           1/38
+    router2:   Upgrading        : audit-libs-3.1.5-8.el9.x86_64                         2/38
+    router2:   Installing       : net-snmp-libs-1:5.9.1-21.el9.x86_64                   3/38
+    router2:   Upgrading        : libsemanage-3.6-5.el9_6.x86_64                        4/38
+    router2:   Upgrading        : python3-libselinux-3.6-3.el9.x86_64                   5/38
+    router2:   Upgrading        : libselinux-utils-3.6-3.el9.x86_64                     6/38
+    router2:   Upgrading        : policycoreutils-3.6-5.el9.x86_64                      7/38
+    router2:   Running scriptlet: policycoreutils-3.6-5.el9.x86_64                      7/38
+    router2:   Upgrading        : selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router2:   Running scriptlet: selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router2:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router2:   Upgrading        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router2:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router2:   Installing       : python3-setuptools-53.0.0-15.el9.noarch              10/38
+    router2:   Installing       : python3-distro-1.5.0-7.el9.noarch                    11/38
+    router2:   Installing       : python3-setools-4.4.4-1.el9.x86_64                   12/38
+    router2:   Installing       : python3-libsemanage-3.6-5.el9_6.x86_64               13/38
+    router2:   Installing       : python3-audit-3.1.5-8.el9.x86_64                     14/38
+    router2:   Installing       : info-6.7-15.el9.x86_64                               15/38
+    router2:   Installing       : mariadb-connector-c-config-3.2.6-2.el9_8.noarch      16/38
+    router2:   Installing       : mariadb-connector-c-3.2.6-2.el9_8.x86_64             17/38
+    router2:   Installing       : lm_sensors-libs-3.6.0-10.el9.x86_64                  18/38
+    router2:   Installing       : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64            19/38
+    router2:   Installing       : net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router2:   Running scriptlet: net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router2:   Installing       : libyang-2.1.148-1.el9_8.1.x86_64                     21/38
+    router2:   Installing       : checkpolicy-3.6-1.el9.x86_64                         22/38
+    router2:   Installing       : python3-policycoreutils-3.6-5.el9.noarch             23/38
+    router2:   Installing       : policycoreutils-python-utils-3.6-5.el9.noarch        24/38
+    router2:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router2:   Installing       : frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router2:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router2:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router2:   Installing       : frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router2:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router2:   Upgrading        : audit-3.1.5-8.el9.x86_64                             27/38
+    router2:   Running scriptlet: audit-3.1.5-8.el9.x86_64                             27/38
+    router2: Warning: The unit file, source configuration file or drop-ins of auditd.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+    router2:
+    router2:   Installing       : net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router2:   Running scriptlet: net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router2:   Installing       : traceroute-3:2.1.1-1.el9.x86_64                      29/38
+    router2:   Cleanup          : python3-libselinux-3.6-1.el9.x86_64                  30/38
+    router2:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router2:   Cleanup          : selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router2:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router2:   Running scriptlet: audit-3.1.5-1.el9.x86_64                             32/38
+    router2:   Cleanup          : audit-3.1.5-1.el9.x86_64                             32/38
+    router2:   Cleanup          : selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router2:   Running scriptlet: selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router2:   Running scriptlet: policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router2:   Cleanup          : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router2:   Cleanup          : libsemanage-3.6-1.el9.x86_64                         35/38
+    router2:   Cleanup          : libselinux-utils-3.6-1.el9.x86_64                    36/38
+    router2:   Cleanup          : libselinux-3.6-1.el9.x86_64                          37/38
+    router2:   Cleanup          : audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router2:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     38/38
+    router2:   Running scriptlet: audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router2:   Verifying        : checkpolicy-3.6-1.el9.x86_64                          1/38
+    router2:   Verifying        : frr-8.5.3-15.el9_8.1.x86_64                           2/38
+    router2:   Verifying        : frr-selinux-8.5.3-15.el9_8.1.noarch                   3/38
+    router2:   Verifying        : libyang-2.1.148-1.el9_8.1.x86_64                      4/38
+    router2:   Verifying        : lm_sensors-libs-3.6.0-10.el9.x86_64                   5/38
+    router2:   Verifying        : mariadb-connector-c-3.2.6-2.el9_8.x86_64              6/38
+    router2:   Verifying        : mariadb-connector-c-config-3.2.6-2.el9_8.noarch       7/38
+    router2:   Verifying        : net-snmp-1:5.9.1-21.el9.x86_64                        8/38
+    router2:   Verifying        : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64             9/38
+    router2:   Verifying        : net-snmp-libs-1:5.9.1-21.el9.x86_64                  10/38
+    router2:   Verifying        : policycoreutils-python-utils-3.6-5.el9.noarch        11/38
+    router2:   Verifying        : python3-audit-3.1.5-8.el9.x86_64                     12/38
+    router2:   Verifying        : python3-distro-1.5.0-7.el9.noarch                    13/38
+    router2:   Verifying        : python3-libsemanage-3.6-5.el9_6.x86_64               14/38
+    router2:   Verifying        : python3-policycoreutils-3.6-5.el9.noarch             15/38
+    router2:   Verifying        : info-6.7-15.el9.x86_64                               16/38
+    router2:   Verifying        : net-tools-2.0-0.64.20160912git.el9.x86_64            17/38
+    router2:   Verifying        : python3-setools-4.4.4-1.el9.x86_64                   18/38
+    router2:   Verifying        : python3-setuptools-53.0.0-15.el9.noarch              19/38
+    router2:   Verifying        : traceroute-3:2.1.1-1.el9.x86_64                      20/38
+    router2:   Verifying        : python3-libselinux-3.6-3.el9.x86_64                  21/38
+    router2:   Verifying        : python3-libselinux-3.6-1.el9.x86_64                  22/38
+    router2:   Verifying        : audit-3.1.5-8.el9.x86_64                             23/38
+    router2:   Verifying        : audit-3.1.5-1.el9.x86_64                             24/38
+    router2:   Verifying        : audit-libs-3.1.5-8.el9.x86_64                        25/38
+    router2:   Verifying        : audit-libs-3.1.5-1.el9.x86_64                        26/38
+    router2:   Verifying        : libselinux-3.6-3.el9.x86_64                          27/38
+    router2:   Verifying        : libselinux-3.6-1.el9.x86_64                          28/38
+    router2:   Verifying        : libselinux-utils-3.6-3.el9.x86_64                    29/38
+    router2:   Verifying        : libselinux-utils-3.6-1.el9.x86_64                    30/38
+    router2:   Verifying        : libsemanage-3.6-5.el9_6.x86_64                       31/38
+    router2:   Verifying        : libsemanage-3.6-1.el9.x86_64                         32/38
+    router2:   Verifying        : policycoreutils-3.6-5.el9.x86_64                     33/38
+    router2:   Verifying        : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router2:   Verifying        : selinux-policy-38.1.75-2.el9_8.1.noarch              35/38
+    router2:   Verifying        : selinux-policy-38.1.45-3.el9_5.noarch                36/38
+    router2:   Verifying        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     37/38
+    router2:   Verifying        : selinux-policy-targeted-38.1.45-3.el9_5.noarch       38/38
+    router2:
+    router2: Upgraded:
+    router2:   audit-3.1.5-8.el9.x86_64
+    router2:   audit-libs-3.1.5-8.el9.x86_64
+    router2:   libselinux-3.6-3.el9.x86_64
+    router2:   libselinux-utils-3.6-3.el9.x86_64
+    router2:   libsemanage-3.6-5.el9_6.x86_64
+    router2:   policycoreutils-3.6-5.el9.x86_64
+    router2:   python3-libselinux-3.6-3.el9.x86_64
+    router2:   selinux-policy-38.1.75-2.el9_8.1.noarch
+    router2:   selinux-policy-targeted-38.1.75-2.el9_8.1.noarch
+    router2: Installed:
+    router2:   checkpolicy-3.6-1.el9.x86_64
+    router2:   frr-8.5.3-15.el9_8.1.x86_64
+    router2:   frr-selinux-8.5.3-15.el9_8.1.noarch
+    router2:   info-6.7-15.el9.x86_64
+    router2:   libyang-2.1.148-1.el9_8.1.x86_64
+    router2:   lm_sensors-libs-3.6.0-10.el9.x86_64
+    router2:   mariadb-connector-c-3.2.6-2.el9_8.x86_64
+    router2:   mariadb-connector-c-config-3.2.6-2.el9_8.noarch
+    router2:   net-snmp-1:5.9.1-21.el9.x86_64
+    router2:   net-snmp-agent-libs-1:5.9.1-21.el9.x86_64
+    router2:   net-snmp-libs-1:5.9.1-21.el9.x86_64
+    router2:   net-tools-2.0-0.64.20160912git.el9.x86_64
+    router2:   policycoreutils-python-utils-3.6-5.el9.noarch
+    router2:   python3-audit-3.1.5-8.el9.x86_64
+    router2:   python3-distro-1.5.0-7.el9.noarch
+    router2:   python3-libsemanage-3.6-5.el9_6.x86_64
+    router2:   python3-policycoreutils-3.6-5.el9.noarch
+    router2:   python3-setools-4.4.4-1.el9.x86_64
+    router2:   python3-setuptools-53.0.0-15.el9.noarch
+    router2:   traceroute-3:2.1.1-1.el9.x86_64
+    router2:
+    router2: Complete!
+    router2: net.ipv4.conf.all.forwarding = 1
+    router2: net.ipv4.conf.all.forwarding = 1
+    router2: Created symlink /etc/systemd/system/multi-user.target.wants/frr.service → /usr/lib/systemd/system/frr.service.
+    router2: Note: this version of vtysh never writes vtysh.conf
+    router2: Building Configuration...
+    router2: Integrated configuration saved to /etc/frr/frr.conf
+    router2: [OK]
+==> router3: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router3: This is very often used by the router and can cause the
+==> router3: network to not work properly. If the network doesn't work
+==> router3: properly, try changing this IP.
+==> router3: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router3: This is very often used by the router and can cause the
+==> router3: network to not work properly. If the network doesn't work
+==> router3: properly, try changing this IP.
+==> router3: Importing base box 'almalinux/9'...
+==> router3: Matching MAC address for NAT networking...
+==> router3: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router3: This is very often used by the router and can cause the
+==> router3: network to not work properly. If the network doesn't work
+==> router3: properly, try changing this IP.
+==> router3: You assigned a static IP ending in ".1" or ":1" to this machine.
+==> router3: This is very often used by the router and can cause the
+==> router3: network to not work properly. If the network doesn't work
+==> router3: properly, try changing this IP.
+==> router3: Checking if box 'almalinux/9' version '1.0.0' is up to date...
+==> router3: Setting the name of the VM: dz2_router3_1791748963456_68091
+==> router3: Fixed port collision for 22 => 2222. Now on port 2201.
+==> router3: Clearing any previously set network interfaces...
+==> router3: Preparing network interfaces based on configuration...
+    router3: Adapter 1: nat
+    router3: Adapter 2: hostonly
+    router3: Adapter 3: intnet
+    router3: Adapter 4: intnet
+    router3: Adapter 5: intnet
+==> router3: Forwarding ports...
+    router3: 22 (guest) => 2201 (host) (adapter 1)
+==> router3: Running 'pre-boot' VM customizations...
+==> router3: Booting VM...
+==> router3: Waiting for machine to boot. This may take a few minutes...
+    router3: SSH address: 127.0.0.1:2201
+    router3: SSH username: vagrant
+    router3: SSH auth method: private key
+    router3:
+    router3: Vagrant insecure key detected. Vagrant will automatically replace
+    router3: this with a newly generated keypair for better security.
+    router3:
+    router3: Inserting generated public key within guest...
+==> router3: Machine booted and ready!
+==> router3: Checking for guest additions in VM...
+==> router3: Setting hostname...
+==> router3: Configuring and enabling network interfaces...
+==> router3: Mounting shared folders...
+    router3: D:/linux/Professional/33 Статическая и динамическая маршрутизация, OSPF/dz2 => /vagrant
+==> router3: Running provisioner: shell...
+    router3: Running: inline script
+    router3: Failed to stop firewalld.service: Unit firewalld.service not loaded.
+    router3: Failed to disable unit: Unit file firewalld.service does not exist.
+    router3: Unit firewalld.service does not exist, proceeding anyway.
+    router3: Created symlink /etc/systemd/system/firewalld.service → /dev/null.
+    router3: AlmaLinux 9 - AppStream                         1.2 MB/s |  29 MB     00:23
+    router3: AlmaLinux 9 - BaseOS                            1.2 MB/s |  45 MB     00:37
+    router3: AlmaLinux 9 - Extras                             67 kB/s |  33 kB     00:00
+    router3: Package tcpdump-14:4.99.0-9.el9.x86_64 is already installed.
+    router3: Dependencies resolved.
+    router3: ================================================================================
+    router3:  Package                      Arch   Version                    Repo       Size
+    router3: ================================================================================
+    router3: Installing:
+    router3:  frr                          x86_64 8.5.3-15.el9_8.1           appstream 4.8 M
+    router3:  net-tools                    x86_64 2.0-0.64.20160912git.el9   baseos    294 k
+    router3:  traceroute                   x86_64 3:2.1.1-1.el9              baseos     56 k
+    router3: Upgrading:
+    router3:  audit                        x86_64 3.1.5-8.el9                baseos    253 k
+    router3:  audit-libs                   x86_64 3.1.5-8.el9                baseos    121 k
+    router3:  libselinux                   x86_64 3.6-3.el9                  baseos     85 k
+    router3:  libselinux-utils             x86_64 3.6-3.el9                  baseos    164 k
+    router3:  libsemanage                  x86_64 3.6-5.el9_6                baseos    117 k
+    router3:  policycoreutils              x86_64 3.6-5.el9                  baseos    205 k
+    router3:  python3-libselinux           x86_64 3.6-3.el9                  appstream 186 k
+    router3:  selinux-policy               noarch 38.1.75-2.el9_8.1          baseos     34 k
+    router3:  selinux-policy-targeted      noarch 38.1.75-2.el9_8.1          baseos    6.5 M
+    router3: Installing dependencies:
+    router3:  checkpolicy                  x86_64 3.6-1.el9                  appstream 351 k
+    router3:  frr-selinux                  noarch 8.5.3-15.el9_8.1           appstream  24 k
+    router3:  info                         x86_64 6.7-15.el9                 baseos    224 k
+    router3:  libyang                      x86_64 2.1.148-1.el9_8.1          appstream 539 k
+    router3:  lm_sensors-libs              x86_64 3.6.0-10.el9               appstream  41 k
+    router3:  mariadb-connector-c          x86_64 3.2.6-2.el9_8              appstream 193 k
+    router3:  mariadb-connector-c-config   noarch 3.2.6-2.el9_8              appstream 7.6 k
+    router3:  net-snmp                     x86_64 1:5.9.1-21.el9             appstream 294 k
+    router3:  net-snmp-agent-libs          x86_64 1:5.9.1-21.el9             appstream 692 k
+    router3:  net-snmp-libs                x86_64 1:5.9.1-21.el9             appstream 740 k
+    router3:  policycoreutils-python-utils noarch 3.6-5.el9                  appstream  69 k
+    router3:  python3-audit                x86_64 3.1.5-8.el9                appstream  82 k
+    router3:  python3-distro               noarch 1.5.0-7.el9                appstream  36 k
+    router3:  python3-libsemanage          x86_64 3.6-5.el9_6                appstream  78 k
+    router3:  python3-policycoreutils      noarch 3.6-5.el9                  appstream 2.0 M
+    router3:  python3-setools              x86_64 4.4.4-1.el9                baseos    551 k
+    router3:  python3-setuptools           noarch 53.0.0-15.el9              baseos    831 k
+    router3:
+    router3: Transaction Summary
+    router3: ================================================================================
+    router3: Install  20 Packages
+    router3: Upgrade   9 Packages
+    router3:
+    router3: Total download size: 19 M
+    router3: Downloading Packages:
+    router3: (1/29): frr-selinux-8.5.3-15.el9_8.1.noarch.rpm 934 kB/s |  24 kB     00:00
+    router3: (2/29): checkpolicy-3.6-1.el9.x86_64.rpm        982 kB/s | 351 kB     00:00
+    router3: (3/29): lm_sensors-libs-3.6.0-10.el9.x86_64.rpm 560 kB/s |  41 kB     00:00
+    router3: (4/29): mariadb-connector-c-3.2.6-2.el9_8.x86_6 572 kB/s | 193 kB     00:00
+    router3: (5/29): mariadb-connector-c-config-3.2.6-2.el9_ 795 kB/s | 7.6 kB     00:00
+    router3: (6/29): net-snmp-5.9.1-21.el9.x86_64.rpm        1.2 MB/s | 294 kB     00:00
+    router3: (7/29): libyang-2.1.148-1.el9_8.1.x86_64.rpm    341 kB/s | 539 kB     00:01
+    router3: (8/29): net-snmp-agent-libs-5.9.1-21.el9.x86_64 701 kB/s | 692 kB     00:00
+    router3: (9/29): policycoreutils-python-utils-3.6-5.el9. 135 kB/s |  69 kB     00:00
+    router3: (10/29): python3-audit-3.1.5-8.el9.x86_64.rpm   552 kB/s |  82 kB     00:00
+    router3: (11/29): python3-distro-1.5.0-7.el9.noarch.rpm  378 kB/s |  36 kB     00:00
+    router3: (12/29): python3-libsemanage-3.6-5.el9_6.x86_64 577 kB/s |  78 kB     00:00
+    router3: (13/29): net-snmp-libs-5.9.1-21.el9.x86_64.rpm  228 kB/s | 740 kB     00:03
+    router3: (14/29): info-6.7-15.el9.x86_64.rpm             825 kB/s | 224 kB     00:00
+    router3: (15/29): net-tools-2.0-0.64.20160912git.el9.x86 160 kB/s | 294 kB     00:01
+    router3: (16/29): python3-policycoreutils-3.6-5.el9.noar 455 kB/s | 2.0 MB     00:04
+    router3: (17/29): frr-8.5.3-15.el9_8.1.x86_64.rpm        565 kB/s | 4.8 MB     00:08
+    router3: (18/29): traceroute-2.1.1-1.el9.x86_64.rpm      2.1 MB/s |  56 kB     00:00
+    router3: (19/29): python3-libselinux-3.6-3.el9.x86_64.rp 478 kB/s | 186 kB     00:00
+    router3: (20/29): python3-setools-4.4.4-1.el9.x86_64.rpm 251 kB/s | 551 kB     00:02
+    router3: (21/29): audit-libs-3.1.5-8.el9.x86_64.rpm      802 kB/s | 121 kB     00:00
+    router3: (22/29): python3-setuptools-53.0.0-15.el9.noarc 439 kB/s | 831 kB     00:01
+    router3: (23/29): libselinux-3.6-3.el9.x86_64.rpm        633 kB/s |  85 kB     00:00
+    router3: (24/29): libsemanage-3.6-5.el9_6.x86_64.rpm     776 kB/s | 117 kB     00:00
+    router3: (25/29): libselinux-utils-3.6-3.el9.x86_64.rpm  420 kB/s | 164 kB     00:00
+    router3: (26/29): selinux-policy-38.1.75-2.el9_8.1.noarc 2.3 MB/s |  34 kB     00:00
+    router3: (27/29): policycoreutils-3.6-5.el9.x86_64.rpm   534 kB/s | 205 kB     00:00
+    router3: (28/29): audit-3.1.5-8.el9.x86_64.rpm           236 kB/s | 253 kB     00:01
+    router3: (29/29): selinux-policy-targeted-38.1.75-2.el9_ 1.1 MB/s | 6.5 MB     00:05
+    router3: --------------------------------------------------------------------------------
+    router3: Total                                           1.2 MB/s |  19 MB     00:16
+    router3: Running transaction check
+    router3: Transaction check succeeded.
+    router3: Running transaction test
+    router3: Transaction test succeeded.
+    router3: Running transaction
+    router3:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch       1/1
+    router3:   Preparing        :                                                        1/1
+    router3:   Upgrading        : libselinux-3.6-3.el9.x86_64                           1/38
+    router3:   Running scriptlet: libselinux-3.6-3.el9.x86_64                           1/38
+    router3:   Upgrading        : audit-libs-3.1.5-8.el9.x86_64                         2/38
+    router3:   Installing       : net-snmp-libs-1:5.9.1-21.el9.x86_64                   3/38
+    router3:   Upgrading        : libsemanage-3.6-5.el9_6.x86_64                        4/38
+    router3:   Upgrading        : python3-libselinux-3.6-3.el9.x86_64                   5/38
+    router3:   Upgrading        : libselinux-utils-3.6-3.el9.x86_64                     6/38
+    router3:   Upgrading        : policycoreutils-3.6-5.el9.x86_64                      7/38
+    router3:   Running scriptlet: policycoreutils-3.6-5.el9.x86_64                      7/38
+    router3:   Upgrading        : selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router3:   Running scriptlet: selinux-policy-38.1.75-2.el9_8.1.noarch               8/38
+    router3:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router3:   Upgrading        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router3:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch      9/38
+    router3:   Installing       : python3-setuptools-53.0.0-15.el9.noarch              10/38
+    router3:   Installing       : python3-distro-1.5.0-7.el9.noarch                    11/38
+    router3:   Installing       : python3-setools-4.4.4-1.el9.x86_64                   12/38
+    router3:   Installing       : python3-libsemanage-3.6-5.el9_6.x86_64               13/38
+    router3:   Installing       : python3-audit-3.1.5-8.el9.x86_64                     14/38
+    router3:   Installing       : info-6.7-15.el9.x86_64                               15/38
+    router3:   Installing       : mariadb-connector-c-config-3.2.6-2.el9_8.noarch      16/38
+    router3:   Installing       : mariadb-connector-c-3.2.6-2.el9_8.x86_64             17/38
+    router3:   Installing       : lm_sensors-libs-3.6.0-10.el9.x86_64                  18/38
+    router3:   Installing       : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64            19/38
+    router3:   Installing       : net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router3:   Running scriptlet: net-snmp-1:5.9.1-21.el9.x86_64                       20/38
+    router3:   Installing       : libyang-2.1.148-1.el9_8.1.x86_64                     21/38
+    router3:   Installing       : checkpolicy-3.6-1.el9.x86_64                         22/38
+    router3:   Installing       : python3-policycoreutils-3.6-5.el9.noarch             23/38
+    router3:   Installing       : policycoreutils-python-utils-3.6-5.el9.noarch        24/38
+    router3:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router3:   Installing       : frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router3:   Running scriptlet: frr-selinux-8.5.3-15.el9_8.1.noarch                  25/38
+    router3:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router3:   Installing       : frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router3:   Running scriptlet: frr-8.5.3-15.el9_8.1.x86_64                          26/38
+    router3:   Upgrading        : audit-3.1.5-8.el9.x86_64                             27/38
+    router3:   Running scriptlet: audit-3.1.5-8.el9.x86_64                             27/38
+    router3: Warning: The unit file, source configuration file or drop-ins of auditd.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+    router3:
+    router3:   Installing       : net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router3:   Running scriptlet: net-tools-2.0-0.64.20160912git.el9.x86_64            28/38
+    router3:   Installing       : traceroute-3:2.1.1-1.el9.x86_64                      29/38
+    router3:   Cleanup          : python3-libselinux-3.6-1.el9.x86_64                  30/38
+    router3:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router3:   Cleanup          : selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router3:   Running scriptlet: selinux-policy-38.1.45-3.el9_5.noarch                31/38
+    router3:   Running scriptlet: audit-3.1.5-1.el9.x86_64                             32/38
+    router3:   Cleanup          : audit-3.1.5-1.el9.x86_64                             32/38
+    router3:   Cleanup          : selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router3:   Running scriptlet: selinux-policy-targeted-38.1.45-3.el9_5.noarch       33/38
+    router3:   Running scriptlet: policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router3:   Cleanup          : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router3:   Cleanup          : libsemanage-3.6-1.el9.x86_64                         35/38
+    router3:   Cleanup          : libselinux-utils-3.6-1.el9.x86_64                    36/38
+    router3:   Cleanup          : libselinux-3.6-1.el9.x86_64                          37/38
+    router3:   Cleanup          : audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router3:   Running scriptlet: selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     38/38
+    router3:   Running scriptlet: audit-libs-3.1.5-1.el9.x86_64                        38/38
+    router3:   Verifying        : checkpolicy-3.6-1.el9.x86_64                          1/38
+    router3:   Verifying        : frr-8.5.3-15.el9_8.1.x86_64                           2/38
+    router3:   Verifying        : frr-selinux-8.5.3-15.el9_8.1.noarch                   3/38
+    router3:   Verifying        : libyang-2.1.148-1.el9_8.1.x86_64                      4/38
+    router3:   Verifying        : lm_sensors-libs-3.6.0-10.el9.x86_64                   5/38
+    router3:   Verifying        : mariadb-connector-c-3.2.6-2.el9_8.x86_64              6/38
+    router3:   Verifying        : mariadb-connector-c-config-3.2.6-2.el9_8.noarch       7/38
+    router3:   Verifying        : net-snmp-1:5.9.1-21.el9.x86_64                        8/38
+    router3:   Verifying        : net-snmp-agent-libs-1:5.9.1-21.el9.x86_64             9/38
+    router3:   Verifying        : net-snmp-libs-1:5.9.1-21.el9.x86_64                  10/38
+    router3:   Verifying        : policycoreutils-python-utils-3.6-5.el9.noarch        11/38
+    router3:   Verifying        : python3-audit-3.1.5-8.el9.x86_64                     12/38
+    router3:   Verifying        : python3-distro-1.5.0-7.el9.noarch                    13/38
+    router3:   Verifying        : python3-libsemanage-3.6-5.el9_6.x86_64               14/38
+    router3:   Verifying        : python3-policycoreutils-3.6-5.el9.noarch             15/38
+    router3:   Verifying        : info-6.7-15.el9.x86_64                               16/38
+    router3:   Verifying        : net-tools-2.0-0.64.20160912git.el9.x86_64            17/38
+    router3:   Verifying        : python3-setools-4.4.4-1.el9.x86_64                   18/38
+    router3:   Verifying        : python3-setuptools-53.0.0-15.el9.noarch              19/38
+    router3:   Verifying        : traceroute-3:2.1.1-1.el9.x86_64                      20/38
+    router3:   Verifying        : python3-libselinux-3.6-3.el9.x86_64                  21/38
+    router3:   Verifying        : python3-libselinux-3.6-1.el9.x86_64                  22/38
+    router3:   Verifying        : audit-3.1.5-8.el9.x86_64                             23/38
+    router3:   Verifying        : audit-3.1.5-1.el9.x86_64                             24/38
+    router3:   Verifying        : audit-libs-3.1.5-8.el9.x86_64                        25/38
+    router3:   Verifying        : audit-libs-3.1.5-1.el9.x86_64                        26/38
+    router3:   Verifying        : libselinux-3.6-3.el9.x86_64                          27/38
+    router3:   Verifying        : libselinux-3.6-1.el9.x86_64                          28/38
+    router3:   Verifying        : libselinux-utils-3.6-3.el9.x86_64                    29/38
+    router3:   Verifying        : libselinux-utils-3.6-1.el9.x86_64                    30/38
+    router3:   Verifying        : libsemanage-3.6-5.el9_6.x86_64                       31/38
+    router3:   Verifying        : libsemanage-3.6-1.el9.x86_64                         32/38
+    router3:   Verifying        : policycoreutils-3.6-5.el9.x86_64                     33/38
+    router3:   Verifying        : policycoreutils-3.6-2.1.el9.x86_64                   34/38
+    router3:   Verifying        : selinux-policy-38.1.75-2.el9_8.1.noarch              35/38
+    router3:   Verifying        : selinux-policy-38.1.45-3.el9_5.noarch                36/38
+    router3:   Verifying        : selinux-policy-targeted-38.1.75-2.el9_8.1.noarch     37/38
+    router3:   Verifying        : selinux-policy-targeted-38.1.45-3.el9_5.noarch       38/38
+    router3:
+    router3: Upgraded:
+    router3:   audit-3.1.5-8.el9.x86_64
+    router3:   audit-libs-3.1.5-8.el9.x86_64
+    router3:   libselinux-3.6-3.el9.x86_64
+    router3:   libselinux-utils-3.6-3.el9.x86_64
+    router3:   libsemanage-3.6-5.el9_6.x86_64
+    router3:   policycoreutils-3.6-5.el9.x86_64
+    router3:   python3-libselinux-3.6-3.el9.x86_64
+    router3:   selinux-policy-38.1.75-2.el9_8.1.noarch
+    router3:   selinux-policy-targeted-38.1.75-2.el9_8.1.noarch
+    router3: Installed:
+    router3:   checkpolicy-3.6-1.el9.x86_64
+    router3:   frr-8.5.3-15.el9_8.1.x86_64
+    router3:   frr-selinux-8.5.3-15.el9_8.1.noarch
+    router3:   info-6.7-15.el9.x86_64
+    router3:   libyang-2.1.148-1.el9_8.1.x86_64
+    router3:   lm_sensors-libs-3.6.0-10.el9.x86_64
+    router3:   mariadb-connector-c-3.2.6-2.el9_8.x86_64
+    router3:   mariadb-connector-c-config-3.2.6-2.el9_8.noarch
+    router3:   net-snmp-1:5.9.1-21.el9.x86_64
+    router3:   net-snmp-agent-libs-1:5.9.1-21.el9.x86_64
+    router3:   net-snmp-libs-1:5.9.1-21.el9.x86_64
+    router3:   net-tools-2.0-0.64.20160912git.el9.x86_64
+    router3:   policycoreutils-python-utils-3.6-5.el9.noarch
+    router3:   python3-audit-3.1.5-8.el9.x86_64
+    router3:   python3-distro-1.5.0-7.el9.noarch
+    router3:   python3-libsemanage-3.6-5.el9_6.x86_64
+    router3:   python3-policycoreutils-3.6-5.el9.noarch
+    router3:   python3-setools-4.4.4-1.el9.x86_64
+    router3:   python3-setuptools-53.0.0-15.el9.noarch
+    router3:   traceroute-3:2.1.1-1.el9.x86_64
+    router3:
+    router3: Complete!
+    router3: net.ipv4.conf.all.forwarding = 1
+    router3: net.ipv4.conf.all.forwarding = 1
+    router3: Created symlink /etc/systemd/system/multi-user.target.wants/frr.service → /usr/lib/systemd/system/frr.service.
+    router3: Note: this version of vtysh never writes vtysh.conf
+    router3: Building Configuration...
+    router3: Integrated configuration saved to /etc/frr/frr.conf
+    router3: [OK]
+PS D:\linux\Professional\33 Статическая и динамическая маршрутизация, OSPF\dz2>
