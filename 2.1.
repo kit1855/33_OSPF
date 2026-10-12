@@ -1,0 +1,258 @@
+# Проверка соседей OSPF
+# два соседа (2.2.2.2 и 3.3.3.3) в состоянии Full
+PS D:\linux\Professional\33 Статическая и динамическая маршрутизация, OSPF\dz2> vagrant ssh router1
+vagrant@127.0.0.1's password:
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf neighbor"
+
+Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL
+2.2.2.2           1 Full/Backup     11h06m06s         37.258s 10.0.10.2       eth2:10.0.10.1                       0     0     0
+3.3.3.3           1 Full/Backup     11h02m51s         31.412s 10.0.12.2       eth3:10.0.12.1                       0     0     0
+
+
+# Проверка таблицы маршрутизации OSPF
+маршруты до чужих сетей помечены буквой O>.
+[vagrant@router1 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 11:09:23
+O>* 10.0.11.0/30 [110/200] via 10.0.10.2, eth2, weight 1, 11:02:53
+  *                        via 10.0.12.2, eth3, weight 1, 11:02:53
+O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 11:09:23
+O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 11:09:23
+O>* 192.168.20.0/24 [110/200] via 10.0.10.2, eth2, weight 1, 11:06:03
+O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 11:02:53
+
+# Проверка общей информации OSPF
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf"
+ OSPF Routing Process, Router ID: 1.1.1.1
+ Supports only single TOS (TOS0) routes
+ This implementation conforms to RFC2328
+ RFC1583Compatibility flag is disabled
+ OpaqueCapability flag is disabled
+ Initial SPF scheduling delay 0 millisec(s)
+ Minimum hold time between consecutive SPFs 50 millisec(s)
+ Maximum hold time between consecutive SPFs 5000 millisec(s)
+ Hold time multiplier is currently 1
+ SPF algorithm last executed 11h03m23s ago
+ Last SPF duration 93 usecs
+ SPF timer is inactive
+ LSA minimum interval 5000 msecs
+ LSA minimum arrival 1000 msecs
+ Write Multiplier set to 20
+ Refresh timer 10 secs
+ Maximum multiple paths(ECMP) supported 64
+ Number of external LSA 0. Checksum Sum 0x00000000
+ Number of opaque AS LSA 0. Checksum Sum 0x00000000
+ Area ID: 0.0.0.0 (Backbone)
+   Number of interfaces in this area: Total: 3, Active: 3
+   Number of fully adjacent neighbors in this area: 2
+   Area has no authentication
+   SPF algorithm executed 7 times
+   Number of LSA 6
+   Number of router LSA 3. Checksum Sum 0x00029d67
+   Number of network LSA 3. Checksum Sum 0x00023815
+   Number of summary LSA 0. Checksum Sum 0x00000000
+   Number of ASBR summary LSA 0. Checksum Sum 0x00000000
+   Number of NSSA LSA 0. Checksum Sum 0x00000000
+   Number of opaque link LSA 0. Checksum Sum 0x00000000
+   Number of opaque area LSA 0. Checksum Sum 0x00000000
+
+# пинг до соседних сетей net2 и net3
+[vagrant@router1 ~]$ ping -c 3 192.168.20.1
+PING 192.168.20.1 (192.168.20.1) 56(84) bytes of data.
+64 bytes from 192.168.20.1: icmp_seq=1 ttl=64 time=0.941 ms
+64 bytes from 192.168.20.1: icmp_seq=2 ttl=64 time=1.24 ms
+64 bytes from 192.168.20.1: icmp_seq=3 ttl=64 time=1.84 ms
+
+--- 192.168.20.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2008ms
+rtt min/avg/max/mdev = 0.941/1.341/1.841/0.374 ms
+[vagrant@router1 ~]$ ping -c 3 192.168.30.1
+PING 192.168.30.1 (192.168.30.1) 56(84) bytes of data.
+64 bytes from 192.168.30.1: icmp_seq=1 ttl=64 time=1.61 ms
+64 bytes from 192.168.30.1: icmp_seq=2 ttl=64 time=3.85 ms
+64 bytes from 192.168.30.1: icmp_seq=3 ttl=64 time=1.79 ms
+
+--- 192.168.30.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 1.612/2.415/3.845/1.013 ms
+[vagrant@router1 ~]$ exit
+logout
+
+# Проверка соседей OSPF
+# два соседа (1.1.1.1 и 3.3.3.3) в состоянии Full
+PS D:\linux\Professional\33 Статическая и динамическая маршрутизация, OSPF\dz2> vagrant ssh router2
+vagrant@127.0.0.1's password:
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf neighbor"
+
+Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL
+1.1.1.1           1 Full/DR         11h08m14s         36.888s 10.0.10.1       eth2:10.0.10.2                       0     0     0
+3.3.3.3           1 Full/Backup     11h05m04s         34.227s 10.0.11.1       eth3:10.0.11.2                       0     0     0
+
+# Проверка таблицы маршрутизации OSPF
+маршруты до чужих сетей помечены буквой O>.
+[vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 11:08:21
+O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 11:08:22
+O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 11:05:06
+  *                        via 10.0.11.1, eth3, weight 1, 11:05:06
+O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 11:08:11
+O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 11:08:22
+O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 11:05:06
+
+# Проверка общей информации OSPF
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf"
+ OSPF Routing Process, Router ID: 2.2.2.2
+ Supports only single TOS (TOS0) routes
+ This implementation conforms to RFC2328
+ RFC1583Compatibility flag is disabled
+ OpaqueCapability flag is disabled
+ Initial SPF scheduling delay 0 millisec(s)
+ Minimum hold time between consecutive SPFs 50 millisec(s)
+ Maximum hold time between consecutive SPFs 5000 millisec(s)
+ Hold time multiplier is currently 2
+ SPF algorithm last executed 11h05m11s ago
+ Last SPF duration 95 usecs
+ SPF timer is inactive
+ LSA minimum interval 5000 msecs
+ LSA minimum arrival 1000 msecs
+ Write Multiplier set to 20
+ Refresh timer 10 secs
+ Maximum multiple paths(ECMP) supported 64
+ Number of external LSA 0. Checksum Sum 0x00000000
+ Number of opaque AS LSA 0. Checksum Sum 0x00000000
+ Number of areas attached to this router: 1
+ Area ID: 0.0.0.0 (Backbone)
+   Number of interfaces in this area: Total: 3, Active: 3
+   Number of fully adjacent neighbors in this area: 2
+   Area has no authentication
+   SPF algorithm executed 8 times
+   Number of LSA 6
+   Number of router LSA 3. Checksum Sum 0x00029d67
+   Number of network LSA 3. Checksum Sum 0x00023815
+   Number of summary LSA 0. Checksum Sum 0x00000000
+   Number of ASBR summary LSA 0. Checksum Sum 0x00000000
+   Number of NSSA LSA 0. Checksum Sum 0x00000000
+   Number of opaque link LSA 0. Checksum Sum 0x00000000
+   Number of opaque area LSA 0. Checksum Sum 0x00000000
+
+# пинг до соседних сетей net1 и net3
+[vagrant@router2 ~]$ ping -c 3 192.168.10.1
+PING 192.168.10.1 (192.168.10.1) 56(84) bytes of data.
+64 bytes from 192.168.10.1: icmp_seq=1 ttl=64 time=4.95 ms
+64 bytes from 192.168.10.1: icmp_seq=2 ttl=64 time=1.00 ms
+64 bytes from 192.168.10.1: icmp_seq=3 ttl=64 time=0.968 ms
+
+--- 192.168.10.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2006ms
+rtt min/avg/max/mdev = 0.968/2.308/4.953/1.870 ms
+[vagrant@router2 ~]$ ping -c 3 192.168.30.1
+PING 192.168.30.1 (192.168.30.1) 56(84) bytes of data.
+64 bytes from 192.168.30.1: icmp_seq=1 ttl=64 time=0.526 ms
+64 bytes from 192.168.30.1: icmp_seq=2 ttl=64 time=25.8 ms
+64 bytes from 192.168.30.1: icmp_seq=3 ttl=64 time=0.990 ms
+
+--- 192.168.30.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2030ms
+rtt min/avg/max/mdev = 0.526/9.099/25.781/11.797 ms
+[vagrant@router2 ~]$ exit
+logout
+
+# Проверка соседей OSPF
+# два соседа (2.2.2.2 и 1.1.1.1) в состоянии Full
+PS D:\linux\Professional\33 Статическая и динамическая маршрутизация, OSPF\dz2> vagrant ssh router3
+vagrant@127.0.0.1's password:
+[vagrant@router3 ~]$ sudo vtysh -c "show ip ospf neighbor"
+
+Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL
+2.2.2.2           1 Full/DR         11h05m47s         37.094s 10.0.11.2       eth2:10.0.11.1                       0     0     0
+1.1.1.1           1 Full/DR         11h05m41s         33.879s 10.0.12.1       eth3:10.0.12.2                       0     0     0
+
+# Проверка таблицы маршрутизации OSPF
+маршруты до чужих сетей помечены буквой O>.
+[vagrant@router3 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O>* 10.0.10.0/30 [110/200] via 10.0.11.2, eth2, weight 1, 11:05:46
+  *                        via 10.0.12.1, eth3, weight 1, 11:05:46
+O   10.0.11.0/30 [110/100] is directly connected, eth2, weight 1, 11:05:52
+O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 11:05:46
+O>* 192.168.10.0/24 [110/200] via 10.0.12.1, eth3, weight 1, 11:05:46
+O>* 192.168.20.0/24 [110/200] via 10.0.11.2, eth2, weight 1, 11:05:46
+O   192.168.30.0/24 [110/100] is directly connected, eth4, weight 1, 11:05:52
+
+# Проверка общей информации OSPF
+[vagrant@router3 ~]$ sudo vtysh -c "show ip ospf"
+ OSPF Routing Process, Router ID: 3.3.3.3
+ Supports only single TOS (TOS0) routes
+ This implementation conforms to RFC2328
+ RFC1583Compatibility flag is disabled
+ OpaqueCapability flag is disabled
+ Initial SPF scheduling delay 0 millisec(s)
+ Minimum hold time between consecutive SPFs 50 millisec(s)
+ Maximum hold time between consecutive SPFs 5000 millisec(s)
+ Hold time multiplier is currently 2
+ SPF algorithm last executed 11h05m50s ago
+ Last SPF duration 134 usecs
+ SPF timer is inactive
+ LSA minimum interval 5000 msecs
+ LSA minimum arrival 1000 msecs
+ Write Multiplier set to 20
+ Refresh timer 10 secs
+ Maximum multiple paths(ECMP) supported 64
+ Administrative distance 110
+ Number of external LSA 0. Checksum Sum 0x00000000
+ Number of opaque AS LSA 0. Checksum Sum 0x00000000
+ Number of areas attached to this router: 1
+ Area ID: 0.0.0.0 (Backbone)
+   Number of interfaces in this area: Total: 3, Active: 3
+   Number of fully adjacent neighbors in this area: 2
+   Area has no authentication
+   SPF algorithm executed 6 times
+   Number of LSA 6
+   Number of router LSA 3. Checksum Sum 0x00029d67
+   Number of network LSA 3. Checksum Sum 0x00023815
+   Number of summary LSA 0. Checksum Sum 0x00000000
+   Number of ASBR summary LSA 0. Checksum Sum 0x00000000
+   Number of NSSA LSA 0. Checksum Sum 0x00000000
+   Number of opaque link LSA 0. Checksum Sum 0x00000000
+   Number of opaque area LSA 0. Checksum Sum 0x00000000
+
+# пинг до соседних сетей net1 и net2
+[vagrant@router3 ~]$ ping -c 3 192.168.10.1
+PING 192.168.10.1 (192.168.10.1) 56(84) bytes of data.
+64 bytes from 192.168.10.1: icmp_seq=1 ttl=64 time=3.72 ms
+64 bytes from 192.168.10.1: icmp_seq=2 ttl=64 time=1.88 ms
+64 bytes from 192.168.10.1: icmp_seq=3 ttl=64 time=0.874 ms
+
+--- 192.168.10.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2005ms
+rtt min/avg/max/mdev = 0.874/2.159/3.724/1.180 ms
+[vagrant@router3 ~]$ ping -c 3 192.168.20.1
+PING 192.168.20.1 (192.168.20.1) 56(84) bytes of data.
+64 bytes from 192.168.20.1: icmp_seq=1 ttl=64 time=0.982 ms
+64 bytes from 192.168.20.1: icmp_seq=2 ttl=64 time=0.757 ms
+64 bytes from 192.168.20.1: icmp_seq=3 ttl=64 time=2.18 ms
+
+--- 192.168.20.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2006ms
+rtt min/avg/max/mdev = 0.757/1.307/2.182/0.625 ms
+[vagrant@router3 ~]$ exit
+logout
