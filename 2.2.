@@ -1,0 +1,50 @@
+# выполнение п.2.2. "изобразить ассиметричный роутинг"
+# ассиметричный роутинг - это когда пакет до сервера идёт одним маршрутом
+# а обратно другим машрутом
+# в OSPF это достигается за счет указания стоимости интерфейса через переменную Cost
+# изначально её значение 100, которое будет изменяться на 1000, т.е. станет дорогим
+# подключимся на роутер1 и роутер2 и при помощи трэйсраут будем смотреть как реально ходят пакеты
+# но теоретически это можно увидеть через команду $sudo vtysh -c "show ip route ospf"
+
+# изначально стоимость интерфейсов 2 и 3 на роутере1 = 100
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
+  Router ID 1.1.1.1, Network Type BROADCAST, Cost: 100
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
+  Router ID 1.1.1.1, Network Type BROADCAST, Cost: 100
+
+# при такой стоимости интерфейсов 2 и 3 видно, что маршруты до сети3 идёт через интерфейс 3
+#                                                 а маршрут до сети2 идёт через интерфейс 2
+[vagrant@router1 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 00:40:01
+O>* 10.0.11.0/30 [110/200] via 10.0.10.2, eth2, weight 1, 00:40:01
+  *                        via 10.0.12.2, eth3, weight 1, 00:40:01
+O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 15:09:05
+O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 15:09:05
+O>* 192.168.20.0/24 [110/200] via 10.0.10.2, eth2, weight 1, 00:40:01
+O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 15:02:35
+
+# на роутере2 видно, что маршрут до сети1 идёт через интерфейс 2
+[vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 15:09:42
+O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 15:09:43
+O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 15:06:27
+  *                        via 10.0.11.1, eth3, weight 1, 15:06:27
+O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 15:09:32
+O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 15:09:43
+O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 15:06:27
+
+# 
