@@ -1,4 +1,5 @@
 # выполнение п.2.3. "сделать один из линков "дорогим", но что бы при этом роутинг был симметричным"
+# т.е. чтоб пакет возвращался тем же маршрутом, каким был отправлен
 # решением будет аналогичное изменение стоимости интерфейса, но уже со стороны роутера 2
 # т.е. на роутере 2 на интерфейсе 2 стоимость будет изменена со 100 на 1000
 
@@ -41,6 +42,67 @@ Integrated configuration saved to /etc/frr/frr.conf
 ep Cost
   Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
 
-# 
+# видно что маршруты до сети 1 и сети 3 теперь будут идти через интерфейс 3
+[vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/1000] is directly connected, eth2, weight 1, 00:16:58
+O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 2d09h11m
+O>* 10.0.12.0/30 [110/200] via 10.0.11.1, eth3, weight 1, 00:16:58
+O>* 192.168.10.0/24 [110/300] via 10.0.11.1, eth3, weight 1, 00:16:58
+O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 2d09h11m
+O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 2d09h08m
+
+# tcpdump на роутер 1 будет слушать все интерфейсы и показывать icmp трафик с указанием макадресов
+# и выполняю команду пинг до сети 2
+[vagrant@router1 ~]$ date; ping -c 5 192.168.20.1
+Fri Oct 16 12:18:27 PM UTC 2026
+PING 192.168.20.1 (192.168.20.1) 56(84) bytes of data.
+64 bytes from 192.168.20.1: icmp_seq=1 ttl=63 time=3.71 ms
+64 bytes from 192.168.20.1: icmp_seq=2 ttl=63 time=4.73 ms
+64 bytes from 192.168.20.1: icmp_seq=3 ttl=63 time=5.22 ms
+64 bytes from 192.168.20.1: icmp_seq=4 ttl=63 time=4.94 ms
+64 bytes from 192.168.20.1: icmp_seq=5 ttl=63 time=7.88 ms
+
+--- 192.168.20.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4009ms
+rtt min/avg/max/mdev = 3.712/5.296/7.879/1.387 ms
+
+[vagrant@router1 ~]$ date; sudo tcpdump -i any -n -e icmp
+Fri Oct 16 12:18:21 PM UTC 2026
+tcpdump: data link type LINUX_SLL2
+dropped privs to tcpdump
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+12:18:27.123135 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 18, seq 1, length 64
+12:18:27.126827 eth3  In  ifindex 5 08:00:27:98:ab:74 ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 18, seq 1, length 64
+12:18:28.124986 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 18, seq 2, length 64
+12:18:28.129656 eth3  In  ifindex 5 08:00:27:98:ab:74 ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 18, seq 2, length 64
+12:18:29.127209 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 18, seq 3, length 64
+12:18:29.132390 eth3  In  ifindex 5 08:00:27:98:ab:74 ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 18, seq 3, length 64
+12:18:30.129490 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 18, seq 4, length 64
+12:18:30.134382 eth3  In  ifindex 5 08:00:27:98:ab:74 ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 18, seq 4, length 64
+12:18:31.132258 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 18, seq 5, length 64
+12:18:31.140059 eth3  In  ifindex 5 08:00:27:98:ab:74 ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 18, seq 5, length 64
 
 
+[vagrant@router1 ~]$ ip link show eth3
+5: eth3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:25:49:1f brd ff:ff:ff:ff:ff:ff
+    altname enp0s10
+
+[vagrant@router3 ~]$ ip link show eth3
+5: eth3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:98:ab:74 brd ff:ff:ff:ff:ff:ff
+    altname enp0s10
+
+
+# пинг выполнился, пакеты вернулись
+# для отправки с роутера 1 использовался интерфейс 3, у которого мак-адрес 08:00:27:25:49:1f
+# для получения роутером 1 использовался интерфейс 3, в который приходили пакеты по сети р3,
+# в которой находится интерфейс 3 роутера 3 с мак-адресом 08:00:27:98:ab:74
