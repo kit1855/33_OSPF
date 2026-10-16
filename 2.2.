@@ -29,8 +29,8 @@ net.ipv4.conf.eth3.rp_filter = 0
 [vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
   Router ID 1.1.1.1, Network Type BROADCAST, Cost: 100
 
-# при одинаковой стоимости = 100 интерфейсов 2 и 3 видно, что маршруты до сети3 идёт через интерфейс 3
-#                                                            а маршрут до сети2 идёт через интерфейс 2
+# при одинаковой стоимости = 100 интерфейсов 2 и 3 видно, что маршрут до сети 3 идёт через интерфейс 3
+#                                                           а маршрут до сети 2 идёт через интерфейс 2
 [vagrant@router1 ~]$ sudo vtysh -c "show ip route ospf"
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
