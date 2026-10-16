@@ -1,3 +1,46 @@
 # выполнение п.2.3. "сделать один из линков "дорогим", но что бы при этом роутинг был симметричным"
+# решением будет аналогичное изменение стоимости интерфейса, но уже со стороны роутера 2
+# т.е. на роутере 2 на интерфейсе 2 стоимость будет изменена со 100 на 1000
+
+# изначально стоимость интерфейсов 2 и 3 на роутере2 = 100
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
+
+# при одинаковой стоимости = 100 интерфейсов 2 и 3 видно, что маршрут до сети 1 идёт через интерфейс 2
+#                                                           а маршрут до сети 3 идёт через интерфейс 3
+[vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 00:00:23
+O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 2d08h50m
+O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 00:00:23
+  *                        via 10.0.11.1, eth3, weight 1, 00:00:23
+O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 00:00:23
+O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 2d08h50m
+O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 2d08h46m
+
+# изменение стоимости интрефейса 2 на роутере 2
+[vagrant@router2 ~]$ sudo vtysh -c "configure terminal" \
+  -c "interface eth2" \
+  -c "ip ospf cost 1000"
+sudo vtysh -c "write memory"
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Integrated configuration saved to /etc/frr/frr.conf
+[OK]
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 1000
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth3" | gr
+ep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
+
+# 
 
 
