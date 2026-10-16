@@ -3,8 +3,25 @@
 # а обратно другим машрутом
 # в OSPF это достигается за счет указания стоимости интерфейса через переменную Cost
 # изначально её значение 100, которое будет изменяться на 1000, т.е. станет дорогим
-# подключимся на роутер1 и роутер2 и при помощи трэйсраут будем смотреть как реально ходят пакеты
-# но теоретически это можно увидеть через команду $sudo vtysh -c "show ip route ospf"
+# с роутера 1 будем делать пинг до сети2 с интерфейсом 192.168.20.1
+
+# Есть только одна особенность в ядре линукса, которая не даст нормально выполнить команду пинг
+# она заключется в том, что если пакет пришел не с того интерфейса с которого был отправлен,
+# то он отбрасывается. Т.е. отбросится если переменная rp_filter у интрерфейса имеет значение не 0.
+# изменю изначальное значение 1 на 0 для двух интерфейсов роутера 1.
+[vagrant@router1 ~]$ cat /proc/sys/net/ipv4/conf/eth2/rp_filter
+1
+[vagrant@router1 ~]$ cat /proc/sys/net/ipv4/conf/eth3/rp_filter
+1
+[vagrant@router1 ~]$ sudo sysctl -w net.ipv4.conf.eth2.rp_filter=0
+net.ipv4.conf.eth2.rp_filter = 0
+[vagrant@router1 ~]$ sudo sysctl -w net.ipv4.conf.eth3.rp_filter=0
+net.ipv4.conf.eth3.rp_filter = 0
+[vagrant@router1 ~]$ cat /proc/sys/net/ipv4/conf/eth2/rp_filter
+0
+[vagrant@router1 ~]$ cat /proc/sys/net/ipv4/conf/eth3/rp_filter
+0
+[vagrant@router1 ~]$ # теперь пакет не будет отбрасываться, если пришёл с другого интерфейса, а не с того, с которого был отправлен
 
 # изначально стоимость интерфейсов 2 и 3 на роутере1 = 100
 [vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
@@ -12,8 +29,8 @@
 [vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
   Router ID 1.1.1.1, Network Type BROADCAST, Cost: 100
 
-# при такой стоимости интерфейсов 2 и 3 видно, что маршруты до сети3 идёт через интерфейс 3
-#                                                 а маршрут до сети2 идёт через интерфейс 2
+# при одинаковой стоимости = 100 интерфейсов 2 и 3 видно, что маршруты до сети3 идёт через интерфейс 3
+#                                                            а маршрут до сети2 идёт через интерфейс 2
 [vagrant@router1 ~]$ sudo vtysh -c "show ip route ospf"
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
@@ -22,41 +39,16 @@ Codes: K - kernel route, C - connected, S - static, R - RIP,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 00:40:01
-O>* 10.0.11.0/30 [110/200] via 10.0.10.2, eth2, weight 1, 00:40:01
-  *                        via 10.0.12.2, eth3, weight 1, 00:40:01
-O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 15:09:05
-O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 15:09:05
-O>* 192.168.20.0/24 [110/200] via 10.0.10.2, eth2, weight 1, 00:40:01
-O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 15:02:35
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 00:19:39
+O>* 10.0.11.0/30 [110/200] via 10.0.10.2, eth2, weight 1, 00:19:39
+  *                        via 10.0.12.2, eth3, weight 1, 00:19:39
+O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 2d07h27m
+O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 2d07h27m
+O>* 192.168.20.0/24 [110/200] via 10.0.10.2, eth2, weight 1, 00:19:39
+O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 2d07h20m
+[vagrant@router1 ~]$
 
-# на роутере2 видно, что маршрут до сети1 идёт через интерфейс 2
-[vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
-Codes: K - kernel route, C - connected, S - static, R - RIP,
-       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
-       T - Table, v - VNC, V - VNC-Direct, F - PBR,
-       f - OpenFabric,
-       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-       t - trapped, o - offload failure
-
-O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 15:09:42
-O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 15:09:43
-O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 15:06:27
-  *                        via 10.0.11.1, eth3, weight 1, 15:06:27
-O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 15:09:32
-O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 15:09:43
-O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 15:06:27
-
-# выше была предоставлена информация о том, что на данный момент пекеты будут ходить
-# проверим как будут ходить реально пакеты, при текущей стоимости интефейсов
-[vagrant@router1 ~]$ traceroute 192.168.20.1
-traceroute to 192.168.20.1 (192.168.20.1), 30 hops max, 60 byte packets
- 1  192.168.20.1 (192.168.20.1)  1.716 ms  1.442 ms  2.354 ms
-[vagrant@router2 ~]$ traceroute 192.168.10.1
-traceroute to 192.168.10.1 (192.168.10.1), 30 hops max, 60 byte packets
- 1  192.168.10.1 (192.168.10.1)  1.283 ms  1.727 ms  1.393 ms
-
-# теперь изменю стоимость интерфейса 2 на роутере 1
+# изменю стоимость интерфейса 2 на 1000, интерфейс 3 остаётся с прежним значением 100
 [vagrant@router1 ~]$ sudo vtysh -c "configure terminal" \
   -c "interface eth2" \
   -c "ip ospf cost 1000"
@@ -65,10 +57,13 @@ Note: this version of vtysh never writes vtysh.conf
 Building Configuration...
 Integrated configuration saved to /etc/frr/frr.conf
 [OK]
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
+  Router ID 1.1.1.1, Network Type BROADCAST, Cost: 1000
+[vagrant@router1 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
+  Router ID 1.1.1.1, Network Type BROADCAST, Cost: 100
 
-# посмотрю как в OSPF изменились маршруты на роутере 1 и роутере 2
-# видно что на роутере 1 машруты до сети 2 и сети 3 теперь идут через интерфейс 3
-# т.к. через интерфейс 2 стало дорого
+# теперь видно, что оба маршрута до сети 2 и сети 3 идёт через идут через интерфейс 2
+# но при этом стоимость интерфейсов на роутере 2 осталась без изменения, как и маршруты
 [vagrant@router1 ~]$ sudo vtysh -c "show ip route ospf"
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
@@ -77,15 +72,17 @@ Codes: K - kernel route, C - connected, S - static, R - RIP,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-O   10.0.10.0/30 [110/300] via 10.0.12.2, eth3, weight 1, 00:00:31
-O>* 10.0.11.0/30 [110/200] via 10.0.12.2, eth3, weight 1, 00:00:31
-O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 15:22:28
-O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 15:22:28
-O>* 192.168.20.0/24 [110/300] via 10.0.12.2, eth3, weight 1, 00:00:31
-O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 15:15:58
+O   10.0.10.0/30 [110/300] via 10.0.12.2, eth3, weight 1, 00:01:13
+O>* 10.0.11.0/30 [110/200] via 10.0.12.2, eth3, weight 1, 00:01:13
+O   10.0.12.0/30 [110/100] is directly connected, eth3, weight 1, 2d07h33m
+O   192.168.10.0/24 [110/100] is directly connected, eth4, weight 1, 2d07h33m
+O>* 192.168.20.0/24 [110/300] via 10.0.12.2, eth3, weight 1, 00:01:13
+O>* 192.168.30.0/24 [110/200] via 10.0.12.2, eth3, weight 1, 2d07h26m
 
-# а на роутере 2 ничего не изменилось, т.е. маршрут до сети 1 всё равно оставлся
-# через интерфейс 2
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth2" | grep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
+[vagrant@router2 ~]$ sudo vtysh -c "show ip ospf interface eth3" | grep Cost
+  Router ID 2.2.2.2, Network Type BROADCAST, Cost: 100
 [vagrant@router2 ~]$ sudo vtysh -c "show ip route ospf"
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
@@ -94,52 +91,61 @@ Codes: K - kernel route, C - connected, S - static, R - RIP,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 15:19:45
-O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 15:19:46
-O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 15:16:30
-  *                        via 10.0.11.1, eth3, weight 1, 15:16:30
-O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 15:19:35
-O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 15:19:46
-O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 15:16:30
+O   10.0.10.0/30 [110/100] is directly connected, eth2, weight 1, 2d07h34m
+O   10.0.11.0/30 [110/100] is directly connected, eth3, weight 1, 2d07h34m
+O>* 10.0.12.0/30 [110/200] via 10.0.10.1, eth2, weight 1, 2d07h30m
+  *                        via 10.0.11.1, eth3, weight 1, 2d07h30m
+O>* 192.168.10.0/24 [110/200] via 10.0.10.1, eth2, weight 1, 2d07h33m
+O   192.168.20.0/24 [110/100] is directly connected, eth4, weight 1, 2d07h34m
+O>* 192.168.30.0/24 [110/200] via 10.0.11.1, eth3, weight 1, 2d07h30m
 
-# теперь посмотрим практически, как ходят пакеты
-[vagrant@router1 ~]$ date; traceroute 192.168.20.1
-Tue Oct 13 05:33:51 PM UTC 2026
-traceroute to 192.168.20.1 (192.168.20.1), 30 hops max, 60 byte packets
- 1  10.0.12.2 (10.0.12.2)  2.608 ms  2.387 ms  5.317 ms
- 2  * * *
- 3  * * *
- 4  * * *
- 5  * * *
- 6  * * *
- 7  * * *
- 8  * * *
- 9  * * *
-10  * * *
-11  * * *
-12  * * *
-13  * * *
-14  * * *
-15  * * *
-16  * * *
-17  * * *
-18  * * *
-19  * * *
-20  * * *
-21  * * *
-22  * * *
-23  * * *
-24  * * *
-25  * * *
-26  * * *
-27  * * *
-28  * * *
-29  * * *
-30  * * *
-[vagrant@router1 ~]$
+# tcpdump на роутер 1 будет слушать все интерфейсы и показывать icmp трафик с указанием макадресов
+# и выполняю команду пинг до сети 2
+[vagrant@router1 ~]$ date; ping -c 5 192.168.20.1
+Fri Oct 16 11:26:55 AM UTC 2026
+PING 192.168.20.1 (192.168.20.1) 56(84) bytes of data.
+64 bytes from 192.168.20.1: icmp_seq=1 ttl=64 time=2.52 ms
+64 bytes from 192.168.20.1: icmp_seq=2 ttl=64 time=6.77 ms
+64 bytes from 192.168.20.1: icmp_seq=3 ttl=64 time=5.52 ms
+64 bytes from 192.168.20.1: icmp_seq=4 ttl=64 time=4.59 ms
+64 bytes from 192.168.20.1: icmp_seq=5 ttl=64 time=4.39 ms
 
-[vagrant@router2 ~]$ date; traceroute 192.168.10.1
-Tue Oct 13 05:33:54 PM UTC 2026
-traceroute to 192.168.10.1 (192.168.10.1), 30 hops max, 60 byte packets
- 1  192.168.10.1 (192.168.10.1)  1.509 ms  2.128 ms  2.300 ms
-[vagrant@router2 ~]$
+--- 192.168.20.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4014ms
+rtt min/avg/max/mdev = 2.515/4.755/6.768/1.401 ms
+
+[vagrant@router1 ~]$ date; sudo tcpdump -i any -n -e icmp
+Fri Oct 16 11:26:52 AM UTC 2026
+tcpdump: data link type LINUX_SLL2
+dropped privs to tcpdump
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+11:26:55.368310 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 15, seq 1, length 64
+11:26:55.370807 eth2  In  ifindex 4 08:00:27:f2:c7:3e ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 15, seq 1, length 64
+11:26:56.372655 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 15, seq 2, length 64
+11:26:56.379323 eth2  In  ifindex 4 08:00:27:f2:c7:3e ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 15, seq 2, length 64
+11:26:57.375633 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 15, seq 3, length 64
+11:26:57.381075 eth2  In  ifindex 4 08:00:27:f2:c7:3e ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 15, seq 3, length 64
+11:26:58.379449 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 15, seq 4, length 64
+11:26:58.383958 eth2  In  ifindex 4 08:00:27:f2:c7:3e ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 15, seq 4, length 64
+11:26:59.382459 eth3  Out ifindex 5 08:00:27:25:49:1f ethertype IPv4 (0x0800), length 104: 10.0.12.1 > 192.168.20.1: ICMP echo request, id 15, seq 5, length 64
+11:26:59.386773 eth2  In  ifindex 4 08:00:27:f2:c7:3e ethertype IPv4 (0x0800), length 104: 192.168.20.1 > 10.0.12.1: ICMP echo reply, id 15, seq 5, length 64
+
+[vagrant@router1 ~]$ ip link show eth2
+4: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:d3:d8:01 brd ff:ff:ff:ff:ff:ff
+    altname enp0s9
+[vagrant@router1 ~]$ ip link show eth3
+5: eth3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:25:49:1f brd ff:ff:ff:ff:ff:ff
+    altname enp0s10
+
+[vagrant@router2 ~]$ ip link show eth2
+4: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:f2:c7:3e brd ff:ff:ff:ff:ff:ff
+    altname enp0s9
+
+# пинг выполнился, пакеты вернулись, видно, что для отправки с роутера 1 использовался интерфейс 3
+# у которого мак-адрес 08:00:27:25:49:1f
+# для получения использовался интерфейс 2, в который приходили пакеты по сети р1, в которой
+# находится интерфейс 2 роутера 2 с мак-адресом 08:00:27:f2:c7:3e
